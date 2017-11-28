@@ -1,0 +1,27 @@
+<clr-main-container>
+  <clr-header>
+    <div class="branding">
+      <a href="#" class="nav-link">
+        <clr-icon shape="piggy-bank" class="is-solid is-inverse"></clr-icon>
+        <span class="title">Balancing Act</span>
+      </a>
+    </div>
+    <div class="header-actions">
+    </div>
+  </clr-header>
+  <div class="content-container">
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+    <clr-vertical-nav>
+      <a clrVerticalNavLink routerLink="./home" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="home"></clr-icon>
+        Home
+      </a>
+      <a clrVerticalNavLink routerLink="./about" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="help-info"></clr-icon>
+        About
+      </a>
+    </clr-vertical-nav>
+  </div>
+</clr-main-container>
