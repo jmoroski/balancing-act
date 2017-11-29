@@ -1,0 +1,295 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Balancing Act API",
+    "contact" : {
+      "email" : "balancing-act@moroski.info"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "produces" : [ "application/json" ],
+  "consumes" : [ "application/json" ],
+  "tags" : [ {
+    "name" : "user"
+  }, {
+    "name" : "program"
+  } ],
+  "paths" : {
+    "/program" : {
+      "get" : {
+        "summary" : "get program",
+        "operationId" : "getProgram",
+        "description" : "Gets summary information for the program.\n",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Program"
+            }
+          }
+        }
+      }
+    },
+    "/program/groups" : {
+      "get" : {
+        "summary" : "get program groups",
+        "operationId" : "getProgramGroups",
+        "description" : "Gets the groups associated with the program\n",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Group"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "summary" : "add program group",
+        "description" : "Adds group to program\n",
+        "parameters" : [ {
+          "name" : "groupId",
+          "in" : "body",
+          "schema" : {
+            "$ref" : "#/definitions/objectId"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Created",
+            "schema" : {
+              "$ref" : "#/definitions/Group"
+            },
+            "headers" : {
+              "Location" : {
+                "type" : "string",
+                "format" : "url"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/program/groups/{id}" : {
+      "get" : {
+        "summary" : "get specific program group",
+        "description" : "Gets the program group by unique ID\n",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "type" : "string",
+          "format" : "uuid",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/Group"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "deletes specific program group",
+        "description" : "Removes the program group by unique ID\n",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "type" : "string",
+          "format" : "uuid",
+          "required" : true
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        }
+      }
+    },
+    "/program/groups/{id}/students" : {
+      "get" : {
+        "summary" : "gets group students",
+        "description" : "Gets group students.\n",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "type" : "string",
+          "format" : "uuid",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Student"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "objectId" : {
+      "type" : "string",
+      "format" : "uuid",
+      "readOnly" : true
+    },
+    "Program" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "$ref" : "#/definitions/objectId"
+        },
+        "groups" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Group"
+          }
+        }
+      }
+    },
+    "Group" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "id" : {
+          "$ref" : "#/definitions/objectId"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "administrator" : {
+          "$ref" : "#/definitions/Administrator"
+        },
+        "students" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Student"
+          }
+        }
+      }
+    },
+    "User" : {
+      "discriminator" : "userType",
+      "required" : [ "userType", "emailAddress" ],
+      "properties" : {
+        "id" : {
+          "$ref" : "#/definitions/objectId"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "emailAddress" : {
+          "type" : "string",
+          "format" : "email"
+        },
+        "userType" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Administrator" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/User"
+      } ]
+    },
+    "Student" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/User"
+      } ]
+    },
+    "ContactInfo" : {
+      "type" : "object",
+      "properties" : {
+        "address1" : {
+          "type" : "string"
+        },
+        "address2" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "zip" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Service" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "$ref" : "#/definitions/objectId"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      },
+      "allOf" : [ {
+        "$ref" : "#/definitions/ContactInfo"
+      } ]
+    },
+    "InvoiceItem" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "$ref" : "#/definitions/objectId"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "number"
+        },
+        "rate" : {
+          "type" : "number"
+        }
+      }
+    },
+    "Invoice" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "$ref" : "#/definitions/objectId"
+        },
+        "invoiceDate" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "dueDate" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "invoiceNumber" : {
+          "type" : "string"
+        },
+        "items" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/InvoiceItem"
+          }
+        }
+      }
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/jmoroski/balancing-act/1.0.0",
+  "schemes" : [ "https", "http" ]
+}
