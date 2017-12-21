@@ -92,10 +92,27 @@
                             <goals>
                                 <goal>install-node-and-yarn</goal>
                             </goals>
-                            <phase>initialize</phase>
+                            <phase>validate</phase>
                             <configuration>
                                 <nodeVersion>${node.version}</nodeVersion>
                                 <yarnVersion>${yarn.version}</yarnVersion>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>install modules</id>
+                            <goals>
+                                <goal>yarn</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                        </execution>
+                        <execution>
+                            <id>build ui distribution</id>
+                            <goals>
+                                <goal>yarn</goal>
+                            </goals>
+                            <phase>prepare-package</phase>
+                            <configuration>
+                                <arguments>run build</arguments>
                             </configuration>
                         </execution>
                     </executions>
