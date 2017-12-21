@@ -15,6 +15,7 @@ buildNumber.properties
 coverage/
 dist/
 html-report/
+node/
 node_modules/
 typings/
 **/*npm-debug.log.*
