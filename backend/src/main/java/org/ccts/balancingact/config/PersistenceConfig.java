@@ -4,9 +4,13 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.ccts.balancingact.dao.SessionFactoryTemplate;
+import org.ccts.balancingact.dao.SessionFactoryTemplateImpl;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -18,6 +22,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:connection.properties")
+@ComponentScan(basePackages = "org.ccts.balancingact.dao")
 public class PersistenceConfig {
     @Autowired
     private Environment env;
@@ -25,6 +30,8 @@ public class PersistenceConfig {
     Properties hibernateProperties() {
         Properties props = new Properties();
         props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+        props.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        props.setProperty("hibernate.show_sql", "true");
 
         return props;
     }
@@ -44,8 +51,10 @@ public class PersistenceConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("org.ccts.balancingact.model");
+        sessionFactory.setPackagesToScan("org.ccts.balancingact.model.db");
+        sessionFactory.setAnnotatedPackages("org.ccts.balancingact.model.db");
         sessionFactory.setHibernateProperties(hibernateProperties());
+        sessionFactory.setNamingStrategy(new ImprovedNamingStrategy());
 
         return sessionFactory;
     }
@@ -59,5 +68,10 @@ public class PersistenceConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
        return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public SessionFactoryTemplate sessionFactoryTemplate() {
+        return new SessionFactoryTemplateImpl();
     }
 }
