@@ -1,0 +1,134 @@
+<#macro compress_single_line>
+    <#local captured><#nested></#local>
+${ captured?replace("^\\s+|\\s+$|\\n|\\r", "", "rm") }
+</#macro>
+<@compress_single_line>
+{
+    "styles":{
+        "invoiceTitle":{
+            "fontSize":20,
+            "bold":true,
+            "alignment":"right"
+        },
+        "companyName":{
+            "fontSize":16,
+            "bold":true
+        }
+    },
+    "content":[
+        <#list reports as report>
+        {
+            "layout":"noBorders",
+            "table":{
+                "widths":["50%", "50%"],
+                "body":[
+                    [
+                        {
+                            "text":"${report.companyName}",
+                            "style":"companyName"
+                        },
+                        {
+                            "text":"Invoice",
+                            "style":"invoiceTitle"
+                        }
+                    ],
+                    [
+                        {
+                            "stack":[
+                                "${report.companyAddress1}",
+                                <#if companyAddress2??>"${report.companyAddress2},"</#if>
+                                "${report.companyCity}, ${report.companyState} ${report.companyZip}"
+                            ],
+                            "margin":[0, 0, 0, 40]
+                        },
+                        {
+                            "layout":"headerLineOnly",
+                            "margin":[0, 10, 0, 0],
+                            "table":{
+                                "headerRows":1,
+                                "widths":["*", "*", "*"],
+                                "body":[
+                                    ["Date", "Due Date", "Invoice #" ],
+                                    ["${report.invoiceDate?date}", "${report.dueDate?date}", "${report.invoiceNumber}"]
+                                ]
+                            }
+                        }
+                    ],
+                    [
+                        {
+                            "stack":["BILL TO:", "${report.clientName}"]
+                        },
+                        {
+                            "layout":"headerLineOnly",
+                            "table":{
+                                "headerRows":1,
+                                "widths":["*", "*"],
+                                "body":[
+                                    ["Balance Due>>", "${report.total?string.currency}"]
+                                ]
+                            }
+                        }
+                    ]
+                ]
+            }
+        },
+        {
+            "stack":[
+                {
+                    "fontSize":16,
+                    "text":"--------------------------------------------------------------------------------------------------------------------",
+                    "margin":[0, 20, 0, 0]
+                },
+                {
+                    "text":"Please detach and return top portion with your payment",
+                    "alignment":"right",
+                    "fontSize":10,
+                    "margin":[0, 0, 0, 40]
+                }
+            ]
+        },
+        {
+            "layout":"headerLineOnly",
+            "table":{
+                "headerRows":1,
+                "widths":["*", "15%", "15%", "15%"],
+                "body":[
+                    ["Description", "Quantity", "Rate", "Amount"],
+                    <#list report.items as item>
+                    ["${item.description}", "<#if item.quantity gt 0>${item.quantity}</#if>", "<#if item.rate gt 0>${item.rate}</#if>", "${item.amount?string.currency}"]<#if item?has_next>,</#if>
+                    </#list>
+                ]
+            }
+        },
+        {
+            "table":{
+                "widths":["*", "15%", "15%"],
+                "body":[
+                    [
+                        {
+                            "border":[false, true, false, false],
+                            "text":""
+                        },
+                        {
+                            "border":[false, true, false, false],
+                            "text":"TOTAL"
+                        },
+                        {
+                            "border":[false, true, false, false],
+                            "text":"${report.total?string.currency}"
+                        }
+                    ]
+                ]
+            }
+        },
+        {
+            "text":"Thank you for your business!",
+            "alignment":"center",
+            "margin":[0, 25]<#if !report?is_last>,
+            "pageBreak":"after"
+            </#if>
+        }<#if !report?is_last>,</#if>
+        </#list>
+    ]
+}
+</@compress_single_line>
