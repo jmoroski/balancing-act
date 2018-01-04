@@ -18,8 +18,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <freemarker.version>2.3.23</freemarker.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
-        <postgres.version>42.1.4</postgres.version>
+        <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+        <jackson.version>2.7.5</jackson.version>
+        <mysql.version>6.0.6</mysql.version>
         <servlet.version>3.1.0</servlet.version>
         <spring.version>4.3.7.RELEASE</spring.version>
         <tomcat.version>7.0.82</tomcat.version>
@@ -44,11 +47,16 @@
                 <artifactId>hibernate-core</artifactId>
                 <version>${hibernate.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.1-api</artifactId>
+                <version>${hibernate.jpa.version}</version>
+            </dependency>
 
             <dependency>
-                <groupId>org.postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>${postgres.version}</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
                 <scope>runtime</scope>
             </dependency>
 
@@ -56,6 +64,12 @@
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-jdbc</artifactId>
                 <version>${tomcat.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
             </dependency>
 
             <dependency>
@@ -68,6 +82,18 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
