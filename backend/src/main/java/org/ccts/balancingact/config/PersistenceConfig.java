@@ -30,7 +30,7 @@ public class PersistenceConfig {
     Properties hibernateProperties() {
         Properties props = new Properties();
         props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-        props.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        props.setProperty("hibernate.hbm2ddl.auto", "");
         props.setProperty("hibernate.show_sql", "true");
 
         return props;
