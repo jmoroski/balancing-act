@@ -32,7 +32,9 @@ export class UsersComponent implements OnInit {
       address += '<br />';
     }
 
-    address += `${user.contactInfo.city}, ${user.contactInfo.state} ${user.contactInfo.zip}`;
+    if (user.contactInfo.city != null) {
+      address += `${user.contactInfo.city}, ${user.contactInfo.state} ${user.contactInfo.zip}`;
+    }
 
     return address;
   }

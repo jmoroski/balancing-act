@@ -64,7 +64,19 @@ export class AddEditUserComponent implements OnInit {
 
   open(user:User = this.defaultUser()) {
     this.user = user;
-    this.formGroup.reset(this.user);
+    if (this.user.contactInfo == null) {
+      this.user.contactInfo = {};
+    }
+    this.formGroup.reset({
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      userType: this.user.userType,
+      address1: this.user.contactInfo.address1,
+      address2: this.user.contactInfo.address2,
+      city: this.user.contactInfo.city,
+      state: this.user.contactInfo.state,
+      zip: this.user.contactInfo.zip,
+    });
     this.opened = true;
     
   }
@@ -94,7 +106,6 @@ export class AddEditUserComponent implements OnInit {
     this.user.contactInfo.city = this.formGroup.get('city').value;
     this.user.contactInfo.state = this.formGroup.get('state').value;
     this.user.contactInfo.zip = this.formGroup.get('zip').value;
-    console.log(JSON.stringify(this.user));
 
     if (this.user.id == null) {
       this.userService.addUser(this.user).subscribe(
