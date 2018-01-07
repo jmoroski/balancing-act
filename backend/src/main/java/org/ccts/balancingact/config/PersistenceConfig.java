@@ -44,6 +44,17 @@ public class PersistenceConfig {
         ds.setUsername(env.getProperty("jdbc.username"));
         ds.setPassword(env.getProperty("jdbc.password"));
 
+        ds.setTestOnBorrow(true);
+        ds.setValidationInterval(10000L);
+        ds.setValidationQuery("select 1");
+
+        ds.setTestWhileIdle(true);
+        ds.setTimeBetweenEvictionRunsMillis(60000);
+
+        ds.setInitialSize(2);
+        ds.setMaxActive(10);
+        ds.setMaxIdle(10);
+
         return ds;
     }
 
