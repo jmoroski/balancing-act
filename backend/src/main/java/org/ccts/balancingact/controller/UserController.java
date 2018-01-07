@@ -1,5 +1,7 @@
 package org.ccts.balancingact.controller;
 
+import java.util.List;
+
 import org.ccts.balancingact.dao.UserDao;
 import org.ccts.balancingact.model.api.Administrator;
 import org.ccts.balancingact.model.api.Student;
@@ -28,7 +30,7 @@ public class UserController {
 //    private BankingDao bankingDao;
 
     @GetMapping
-    public ResponseEntity<?> getUsers() {
+    public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userDao.getUsers(), HttpStatus.OK);
     }
 
@@ -57,12 +59,12 @@ public class UserController {
     }
 
     @GetMapping(params = "students")
-    public ResponseEntity<?> getStudents() {
+    public ResponseEntity<List<Student>> getStudents() {
         return new ResponseEntity<>(userDao.getStudents(), HttpStatus.OK);
     }
 
     @GetMapping(params = "administrators")
-    public ResponseEntity<?> getAdministrators() {
+    public ResponseEntity<List<Administrator>> getAdministrators() {
         return new ResponseEntity<>(userDao.getAdministrators(), HttpStatus.OK);
     }
 }
