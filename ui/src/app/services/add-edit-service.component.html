@@ -1,0 +1,45 @@
+<clr-modal #modal [clrModalClosable]="false" [(clrModalOpen)]="opened">
+  <h3 class="modal-title">{{isEdit ? 'Edit Service' : 'Add Service'}}</h3>
+  <div class="modal-body">
+      <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+          <section class="form-block">
+            <div class="form-group">
+              <label>Company Name</label>
+              <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="name.invalid && (name.dirty || name.touched)">
+                <input type="text" formControlName="name">
+                <span class="tooltip-content">Name is required.</span>
+              </label>
+            </div>
+          </section>
+          <section>
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" formControlName="address1">
+            </div>
+            <div class="form-group">
+              <label>Address (cont.)</label>
+              <input type="text" formControlName="address2">
+            </div>
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" formControlName="city">
+            </div>
+            <div class="form-group">
+              <label>State</label>
+              <input type="text" formControlName="state">
+            </div>
+            <div class="form-group">
+              <label>Zip</label>
+              <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="zip.invalid && (zip.dirty || zip.touched)">
+                  <input type="text" formControlName="zip">
+                <span class="tooltip-content">Valid zip code is required</span>
+              </label>
+            </div>
+          </section>
+        </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline cancel-btn" (click)="close()">Cancel</button>
+      <button type="button" class="btn btn-primary ok-btn" (click)="submit()" [disabled]="!isFormValid()">Ok</button>
+  </div>
+</clr-modal>
