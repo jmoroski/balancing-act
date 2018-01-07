@@ -16,4 +16,20 @@ public class ServiceEntity extends BaseEntity {
 
     @Embedded
     private ContactInfoEntity contactInfo;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ContactInfoEntity getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(ContactInfoEntity contactInfo) {
+        this.contactInfo = contactInfo;
+    }
 }
