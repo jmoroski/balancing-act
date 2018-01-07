@@ -4,100 +4,126 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Objects;
 
-import javax.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
+/**
+ * ContactInfo
+ */
+@Validated
 public class ContactInfo   {
+  @JsonProperty("address1")
+  private String address1 = null;
 
-  private @Valid String address1 = null;
-  private @Valid String address2 = null;
-  private @Valid String city = null;
-  private @Valid String state = null;
-  private @Valid String zip = null;
+  @JsonProperty("address2")
+  private String address2 = null;
 
-  /**
-   **/
+  @JsonProperty("city")
+  private String city = null;
+
+  @JsonProperty("state")
+  private String state = null;
+
+  @JsonProperty("zip")
+  private String zip = null;
+
   public ContactInfo address1(String address1) {
     this.address1 = address1;
     return this;
   }
 
-
+   /**
+   * Get address1
+   * @return address1
+  **/
   @ApiModelProperty(value = "")
-  @JsonProperty("address1")
+
+
   public String getAddress1() {
     return address1;
   }
+
   public void setAddress1(String address1) {
     this.address1 = address1;
   }
 
-  /**
-   **/
   public ContactInfo address2(String address2) {
     this.address2 = address2;
     return this;
   }
 
-
+   /**
+   * Get address2
+   * @return address2
+  **/
   @ApiModelProperty(value = "")
-  @JsonProperty("address2")
+
+
   public String getAddress2() {
     return address2;
   }
+
   public void setAddress2(String address2) {
     this.address2 = address2;
   }
 
-  /**
-   **/
   public ContactInfo city(String city) {
     this.city = city;
     return this;
   }
 
-
+   /**
+   * Get city
+   * @return city
+  **/
   @ApiModelProperty(value = "")
-  @JsonProperty("city")
+
+
   public String getCity() {
     return city;
   }
+
   public void setCity(String city) {
     this.city = city;
   }
 
-  /**
-   **/
   public ContactInfo state(String state) {
     this.state = state;
     return this;
   }
 
-
+   /**
+   * Get state
+   * @return state
+  **/
   @ApiModelProperty(value = "")
-  @JsonProperty("state")
+
+
   public String getState() {
     return state;
   }
+
   public void setState(String state) {
     this.state = state;
   }
 
-  /**
-   **/
   public ContactInfo zip(String zip) {
     this.zip = zip;
     return this;
   }
 
-
+   /**
+   * Get zip
+   * @return zip
+  **/
   @ApiModelProperty(value = "")
-  @JsonProperty("zip")
+
+
   public String getZip() {
     return zip;
   }
+
   public void setZip(String zip) {
     this.zip = zip;
   }
@@ -112,11 +138,11 @@ public class ContactInfo   {
       return false;
     }
     ContactInfo contactInfo = (ContactInfo) o;
-    return Objects.equals(address1, contactInfo.address1) &&
-        Objects.equals(address2, contactInfo.address2) &&
-        Objects.equals(city, contactInfo.city) &&
-        Objects.equals(state, contactInfo.state) &&
-        Objects.equals(zip, contactInfo.zip);
+    return Objects.equals(this.address1, contactInfo.address1) &&
+        Objects.equals(this.address2, contactInfo.address2) &&
+        Objects.equals(this.city, contactInfo.city) &&
+        Objects.equals(this.state, contactInfo.state) &&
+        Objects.equals(this.zip, contactInfo.zip);
   }
 
   @Override

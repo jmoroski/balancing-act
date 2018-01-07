@@ -2,10 +2,13 @@ package org.ccts.balancingact.model.api;
 
 import java.util.Objects;
 
+import org.springframework.validation.annotation.Validated;
 
+/**
+ * Administrator
+ */
+@Validated
 public class Administrator extends User  {
-
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -15,13 +18,12 @@ public class Administrator extends User  {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Administrator administrator = (Administrator) o;
     return true;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash();
+    return Objects.hash(super.hashCode());
   }
 
   @Override

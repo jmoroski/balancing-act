@@ -2,10 +2,13 @@ package org.ccts.balancingact.model.api;
 
 import java.util.Objects;
 
+import org.springframework.validation.annotation.Validated;
 
+/**
+ * Student
+ */
+@Validated
 public class Student extends User  {
-
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -15,13 +18,12 @@ public class Student extends User  {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Student student = (Student) o;
     return true;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash();
+    return Objects.hash(super.hashCode());
   }
 
   @Override
