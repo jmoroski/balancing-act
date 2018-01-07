@@ -55,6 +55,14 @@ public abstract class UserEntity extends BaseEntity {
         return lastName;
     }
 
+    public void setContactInfo(ContactInfoEntity contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    public ContactInfoEntity getContactInfo() {
+        return contactInfo;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
