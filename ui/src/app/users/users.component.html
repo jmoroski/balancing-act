@@ -1,0 +1,25 @@
+<h3>User Management</h3>
+<clr-datagrid [clrDgLoading]="loading">
+    <clr-dg-action-bar>
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-primary" (click)="addUser()"><clr-icon shape="plus"></clr-icon> Add User</button>
+        </div>
+    </clr-dg-action-bar>
+  <clr-dg-column>Full Name</clr-dg-column>
+  <clr-dg-column>Address</clr-dg-column>
+  <clr-dg-column>Type</clr-dg-column>
+
+  <clr-dg-placeholder>No users have been created.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let user of users" [clrDgItem]="user">
+      <clr-dg-action-overflow>
+          <button class="action-item" (click)="editUser(user)">Edit</button>
+          <button class="action-item" (click)="deleteUser(user)">Delete</button>
+      </clr-dg-action-overflow>
+      <clr-dg-cell>{{user.lastName}}, {{user.firstName}} </clr-dg-cell>
+      <clr-dg-cell><div [innerHtml]="addressString(user)"></div></clr-dg-cell>
+      <clr-dg-cell>{{user.userType}}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>{{users?.length}} users</clr-dg-footer>
+</clr-datagrid>
+<app-add-edit-user #addEditUserComponent (submitted)="loadData()"></app-add-edit-user>

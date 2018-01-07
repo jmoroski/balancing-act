@@ -6,14 +6,15 @@ import { HttpModule } from '@angular/http';
 import { ClarityModule } from 'clarity-angular';
 import { AppComponent } from './app.component';
 import { ROUTING } from "./app.routing";
-import { HomeComponent } from "./home/home.component";
-import { AboutComponent } from "./about/about.component";
+import { UsersComponent } from './users/users.component';
+import { HttpClientModule } from "@angular/common/http";
+import { AddEditUserComponent } from "app/users/add-edit-user.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        AboutComponent,
-        HomeComponent,
+        UsersComponent,
+        AddEditUserComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -21,6 +22,7 @@ import { AboutComponent } from "./about/about.component";
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
+        HttpClientModule,
         ClarityModule,
         ROUTING
     ],
