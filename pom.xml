@@ -21,7 +21,7 @@
         <freemarker.version>2.3.23</freemarker.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
         <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
-        <jackson.version>2.7.5</jackson.version>
+        <jackson.version>2.9.3</jackson.version>
         <javax.validation.version>2.0.0.Final</javax.validation.version>
         <modelmapper.version>1.1.0</modelmapper.version>
         <mysql.version>6.0.6</mysql.version>
@@ -96,6 +96,17 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
 
