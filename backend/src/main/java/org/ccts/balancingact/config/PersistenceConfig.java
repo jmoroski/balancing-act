@@ -62,7 +62,7 @@ public class PersistenceConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("org.ccts.balancingact.model.db");
+        sessionFactory.setPackagesToScan("org.ccts.balancingact.model.db", "org.ccts.balancingact.model");
         sessionFactory.setAnnotatedPackages("org.ccts.balancingact.model.db");
         sessionFactory.setHibernateProperties(hibernateProperties());
         sessionFactory.setNamingStrategy(new ImprovedNamingStrategy());
