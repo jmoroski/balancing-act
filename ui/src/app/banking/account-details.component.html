@@ -1,0 +1,48 @@
+<button class="btn btn-link" routerLink="../">&lt; Bank Accounts</button>
+<h3>Account Details</h3>
+<div *ngIf="bankAccount">
+  <table class="table table-vertical table-noborder">
+    <tr>
+      <td style="width: 15%;">Account Name</td>
+      <td>{{bankAccount.accountName}}</td>
+    </tr>
+    <tr>
+      <td>Account Number</td>
+      <td>{{bankAccount.accountId}}</td>
+    </tr>
+    <tr>
+      <td>Account Holder</td>
+      <td>{{{firstName: bankAccount.ownerFirstName, lastName: bankAccount.ownerLastName} | baDisplayName}}</td>
+    </tr>
+    <tr>
+      <td>Balance</td>
+      <td>{{bankAccount.balance | baCurrency}}</td>
+    </tr>
+  </table>
+  <h3>Transactions</h3>
+  <clr-datagrid [clrDgLoading]="transactionsLoading">
+    <clr-dg-action-bar>
+      <div class="btn-group">
+        <button type="button" class="btn btn-sm btn-primary" (click)="addTransaction()">
+          <clr-icon shape="plus"></clr-icon> Add Transaction</button>
+      </div>
+    </clr-dg-action-bar>
+    <clr-dg-column>Posting Date</clr-dg-column>
+    <clr-dg-column>Description</clr-dg-column>
+    <clr-dg-column style="width: 15%">Amount</clr-dg-column>
+
+    <clr-dg-placeholder>No transactions to display</clr-dg-placeholder>
+    <clr-dg-row *clrDgItems="let transaction of transactions">
+      <clr-dg-action-overflow>
+        <button class="action-item" (click)="editTransaction(transaction)">Edit Transaction</button>
+        <button class="action-item" (click)="deleteTransaction(transaction)">Delete Transaction</button>
+      </clr-dg-action-overflow>
+      <clr-dg-cell>{{transaction.transactionTime | date:'MM/dd/yyyy'}}</clr-dg-cell>
+      <clr-dg-cell>{{transaction.name}}</clr-dg-cell>
+      <clr-dg-cell class="currency">{{transaction.amount | baCurrency}}</clr-dg-cell>
+    </clr-dg-row>
+
+    <clr-dg-footer>{{transactions?.length}} transactions</clr-dg-footer>
+  </clr-datagrid>
+  <app-add-edit-transaction #addEditTransactionComponent (submitted)="loadData()"></app-add-edit-transaction>
+</div>

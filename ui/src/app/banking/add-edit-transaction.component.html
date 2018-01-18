@@ -1,0 +1,42 @@
+<clr-modal #modal [clrModalClosable]="false" [(clrModalOpen)]="opened">
+  <h3 class="modal-title">{{isEdit ? 'Edit Transaction' : 'Add Transaction'}}</h3>
+  <div class="modal-body" *ngIf="opened">
+      <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+          <section class="form-block">
+            <div class="form-group">
+              <label>Date</label>
+              <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('transactionTime')">
+                <input type="date" formControlName="transactionTime" [ngModel] ="transaction.transactionTime | date:'yyyy-MM-dd'">
+                <span class="tooltip-content">Transaction date is required.</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label>Type</label>
+              <div class="select">
+                <select formControlName="transactionType">
+                  <option *ngFor="let type of transactionTypes" [value]="type">{{type}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Amount</label>
+              <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('amount')">
+                <input type="number" formControlName="amount">
+                <span class="tooltip-content">Amount is required.</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('name')">
+                <input type="text" formControlName="name">
+                <span class="tooltip-content">Description is required.</span>
+              </label>
+            </div>
+          </section>
+        </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline cancel-btn" (click)="close()">Cancel</button>
+      <button type="button" class="btn btn-primary ok-btn" (click)="submit()" [disabled]="!formGroup.valid">Ok</button>
+  </div>
+</clr-modal>
