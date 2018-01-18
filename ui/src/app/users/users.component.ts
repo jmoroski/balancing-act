@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { UsersService } from 'app/users.service';
 import { User } from 'app/model/api/user';
 import { AddEditUserComponent } from 'app/users/add-edit-user.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-users',
@@ -9,13 +10,20 @@ import { AddEditUserComponent } from 'app/users/add-edit-user.component';
   styleUrls: ['./users.component.scss'],
   providers: [UsersService]
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
   private users: User[];
   private loading: boolean = true;
+  private subscription: Subscription;
 
   @ViewChild("addEditUserComponent") addEditUserComponent: AddEditUserComponent;
   
-  constructor(private userService: UsersService) { }
+  constructor(private userService: UsersService) {
+    this.subscription = userService.usersModified().subscribe(
+      data => {
+        this.reloadData();
+      }
+    );
+  }
 
   addressString(user: User): string {
     if (user.contactInfo == null) {
@@ -40,7 +48,11 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadData();
+    this.reloadData();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   addUser() {
@@ -54,12 +66,12 @@ export class UsersComponent implements OnInit {
   deleteUser(user) {
     this.userService.deleteUser(user).subscribe(
       data => {
-        this.loadData();
+        this.userService.modifyUsers();
       }
     );
   }
 
-  loadData() {
+  reloadData() {
     this.loading = true;
     this.userService.getUsers().subscribe(
       data => {

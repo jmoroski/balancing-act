@@ -3,6 +3,7 @@
     <div class="modal-body">
         <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
             <section class="form-block">
+              <label>Details</label>
               <div class="form-group">
                 <label>User Type</label>
                 <div class="select">
@@ -14,26 +15,27 @@
               <div class="form-group">
                 <label>First Name</label>
                 <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="firstName.invalid && (firstName.dirty || firstName.touched)">
-                  <input type="text" formControlName="firstName">
+                  <input type="text" formControlName="firstName" size="15">
                   <span class="tooltip-content">First name is required.</span>
                 </label>
               </div>
               <div class="form-group">
                 <label>Last Name</label>
                 <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="lastName.invalid && (lastName.dirty || lastName.touched)">
-                  <input type="text" formControlName="lastName">
+                  <input type="text" formControlName="lastName" size="15">
                   <span class="tooltip-content">Last name is required.</span>
                 </label>
               </div>
             </section>
-            <section>
+            <section class="form-block">
+              <label>Contact Info</label>
               <div class="form-group">
                 <label>Address</label>
-                <input type="text" formControlName="address1">
+                <input type="text" formControlName="address1" size="25">
               </div>
               <div class="form-group">
                 <label>Address (cont.)</label>
-                <input type="text" formControlName="address2">
+                <input type="text" formControlName="address2" size="25">
               </div>
               <div class="form-group">
                 <label>City</label>
@@ -41,12 +43,12 @@
               </div>
               <div class="form-group">
                 <label>State</label>
-                <input type="text" formControlName="state">
+                <input type="text" formControlName="state" size="3">
               </div>
               <div class="form-group">
                 <label>Zip</label>
                 <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="zip.invalid && (zip.dirty || zip.touched)">
-                    <input type="text" formControlName="zip">
+                    <input type="text" formControlName="zip" size="10">
                   <span class="tooltip-content">Valid zip code is required</span>
                 </label>
               </div>

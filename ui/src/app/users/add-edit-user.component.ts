@@ -11,7 +11,6 @@ import { User } from 'app/model/api/user';
 })
 export class AddEditUserComponent implements OnInit {
   @ViewChild("modal") modal: Modal;
-  @Output() submitted = new EventEmitter<any>();
 
   private userTypes: String[] = ['Student', 'Administrator'];
   private user: User;
@@ -111,14 +110,14 @@ export class AddEditUserComponent implements OnInit {
       this.userService.addUser(this.user).subscribe(
         data => {
           this.close();
-          this.submitted.emit();
+          this.userService.modifyUsers();
         }
       );
     } else {
       this.userService.updateUser(this.user).subscribe(
         data => {
           this.close();
-          this.submitted.emit();
+          this.userService.modifyUsers();
         }
       );
     }
