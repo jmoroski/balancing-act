@@ -3,7 +3,6 @@ package org.ccts.balancingact.model.db;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -17,7 +16,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "bank_account_transactions")
 public class BankAccountTransactionEntity extends BaseEntity {
-    @ManyToOne(optional = false, cascade = { CascadeType.REMOVE })
+    @ManyToOne(optional = false)
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "fk_bank_account_transaction_bank_accounts_id"))
     @OnDelete(action = OnDeleteAction.CASCADE)
     private BankAccountEntity account;
