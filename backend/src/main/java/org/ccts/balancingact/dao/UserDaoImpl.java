@@ -1,12 +1,11 @@
 package org.ccts.balancingact.dao;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.ccts.balancingact.model.ModelMapperUtils;
 import org.ccts.balancingact.model.api.Administrator;
 import org.ccts.balancingact.model.api.Student;
 import org.ccts.balancingact.model.api.User;
@@ -35,14 +34,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<User> getUsers() {
-        ModelMapper mapper = new ModelMapper();
         DetachedCriteria criteria = DetachedCriteria.forClass(UserEntity.class);
         criteria.addOrder(Order.asc("lastName"));
         criteria.addOrder(Order.asc("firstName"));
-        List<UserEntity> results = sessionFactoryTemplate.findByCriteria(criteria);
 
-        Type apiType = (new ArrayList<User>()).getClass();
-        return mapper.map(results, apiType);
+        return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), User.class);
     }
 
     @Override
@@ -51,11 +47,8 @@ public class UserDaoImpl implements UserDao {
         DetachedCriteria criteria = DetachedCriteria.forClass(StudentEntity.class);
         criteria.addOrder(Order.asc("lastName"));
         criteria.addOrder(Order.asc("firstName"));
-        List<StudentEntity> results =  sessionFactoryTemplate.findByCriteria(criteria);
 
-        ModelMapper mapper = new ModelMapper();
-        Type apiType = (new ArrayList<Student>()).getClass();
-        return mapper.map(results, apiType);
+        return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), Student.class);
     }
 
     @Override
@@ -64,17 +57,14 @@ public class UserDaoImpl implements UserDao {
         DetachedCriteria criteria = DetachedCriteria.forClass(AdministratorEntity.class);
         criteria.addOrder(Order.asc("lastName"));
         criteria.addOrder(Order.asc("firstName"));
-        List<AdministratorEntity> results = sessionFactoryTemplate.findByCriteria(criteria);
 
-        ModelMapper mapper = new ModelMapper();
-        Type apiType = (new ArrayList<Administrator>()).getClass();
-        return mapper.map(results, apiType);
+        return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), Administrator.class);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Administrator addAdministrator(final Administrator administrator) {
-        ModelMapper mapper = new ModelMapper();
+        ModelMapper mapper = ModelMapperUtils.getInstance();
         AdministratorEntity entity = mapper.map(administrator, AdministratorEntity.class);
         sessionFactoryTemplate.save(entity);
 
@@ -84,7 +74,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Student addStudent(final Student student) {
-        ModelMapper mapper = new ModelMapper();
+        ModelMapper mapper = ModelMapperUtils.getInstance();
         StudentEntity entity = mapper.map(student, StudentEntity.class);
         sessionFactoryTemplate.save(entity);
 
@@ -94,7 +84,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public User updateUser(User user) {
-        ModelMapper mapper = new ModelMapper();
+        ModelMapper mapper = ModelMapperUtils.getInstance();
         UserEntity entity = sessionFactoryTemplate.findById(UUID.fromString(user.getId()), UserEntity.class);
         mapper.map(user, entity);
 

@@ -1,7 +1,9 @@
 package org.ccts.balancingact.controller;
 
 import java.util.List;
+import java.util.UUID;
 
+import org.ccts.balancingact.dao.BankingDao;
 import org.ccts.balancingact.dao.UserDao;
 import org.ccts.balancingact.model.api.Administrator;
 import org.ccts.balancingact.model.api.Student;
@@ -26,8 +28,8 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-//    @Autowired
-//    private BankingDao bankingDao;
+    @Autowired
+    private BankingDao bankingDao;
 
     @GetMapping
     public ResponseEntity<List<User>> getUsers() {
@@ -42,7 +44,7 @@ public class UserController {
     @PostMapping(path = "/students")
     public ResponseEntity<Student> addStudent(@RequestBody Student student) {
         Student newStudent = this.userDao.addStudent(student);
-//        this.bankingDao.createBankAccount(UUID.fromString(newStudent.getId()), this.bankingDao.getBankId());
+        this.bankingDao.createBankAccount(UUID.fromString(newStudent.getId()), this.bankingDao.getBankId());
 
         return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
     }
