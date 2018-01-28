@@ -40,10 +40,10 @@ public class ProgramController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-//    @GetMapping(path = "{id}")
-//    public ResponseEntity<ProgramGroup> getProgramGroup(@PathVariable UUID id) {
-//        return new ResponseEntity<>(programDao.getProgramGroup(id), HttpStatus.OK);
-//    }
+    @GetMapping(path = "{id}")
+    public ResponseEntity<ProgramGroup> getProgramGroup(@PathVariable UUID id) {
+        return new ResponseEntity<>(programDao.getProgramGroup(id), HttpStatus.OK);
+    }
 
       @GetMapping(path = "{id}/students")
       public ResponseEntity<List<Student>> getProgramGroupStudents(@PathVariable UUID id) {

@@ -48,6 +48,11 @@ public class ProgramDaoImpl implements ProgramDao {
     }
 
     @Override
+    public ProgramGroup getProgramGroup(UUID id) {
+        return ModelMapperUtils.getInstance().map(sessionFactoryTemplate.findById(id, ProgramGroupEntity.class), ProgramGroup.class);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void removeProgramGroup(final UUID id) {
         sessionFactoryTemplate.delete(sessionFactoryTemplate.load(id, ProgramGroupEntity.class));
