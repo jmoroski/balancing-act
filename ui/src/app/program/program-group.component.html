@@ -50,14 +50,7 @@
       </button>
       <clr-dropdown-menu *clrIfOpen>
         <button type="button" clrDropdownItem (click)="editGroup()">Edit Group</button>
-        <button type="button" clrDropdownItem>Manage Students</button>
-        <clr-dropdown>
-            <button type="button" clrDropdownTrigger>Manage Rules</button>
-            <clr-dropdown-menu>
-                <button type="button" clrDropdownItem>Payroll</button>
-                <button type="button" clrDropdownItem>Services</button>
-            </clr-dropdown-menu>
-        </clr-dropdown>
+        <button type="button" clrDropdownItem routerLink="./{{programGroup.id}}">Manage</button>
         <button type="button" clrDropdownItem>Reports</button>
         <div class="dropdown-divider"></div>
         <button type="button" clrDropdownItem (click)="deleteProgramGroup()">Delete Group</button>
