@@ -1,0 +1,28 @@
+<clr-modal #modal [clrModalClosable]="false" [(clrModalOpen)]="opened">
+  <h3 class="modal-title">{{isEdit ? 'Edit Program Group' : 'Add Program Group'}}</h3>
+  <div class="modal-body" *ngIf="opened">
+    <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+      <section class="form-block">
+        <div class="form-group">
+          <label>Name</label>
+          <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('name')">
+            <input type="text" formControlName="name">
+            <span class="tooltip-content">Name is required.</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Administrator</label>
+          <div class="select">
+            <select formControlName="administrator">
+              <option *ngFor="let administrator of administrators" [ngValue]="administrator">{{administrator | baDisplayName}}</option>
+            </select>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline cancel-btn" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-primary ok-btn" (click)="submit()" [disabled]="!formGroup.valid">Ok</button>
+  </div>
+</clr-modal>

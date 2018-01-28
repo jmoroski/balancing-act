@@ -14,13 +14,25 @@
       <router-outlet></router-outlet>
     </div>
     <clr-vertical-nav [clrVerticalNavCollapsible]="true">
+      <a clrVerticalNavLink routerLink="./program" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="users" title="Program"></clr-icon>
+        Program
+      </a>
       <a clrVerticalNavLink routerLink="./users" routerLinkActive="active">
-        <clr-icon clrVerticalNavIcon shape="user"></clr-icon>
+        <clr-icon clrVerticalNavIcon shape="user" title="Users"></clr-icon>
         Users
       </a>
-      <a clrVerticalNavLink routerLink="./services" routerLinkActive="active">
-        <clr-icon clrVerticalNavIcon shape="lightbulb"></clr-icon>
+      <a clrVerticalNavLink routerLink="./banking/accounts" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="bank" title="Banking"></clr-icon>
+        Banking
+      </a>
+      <a clrVerticalNavLink routerLink="./services/companies" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="lightbulb" title="Services"></clr-icon>
         Services
+      </a>
+      <a clrVerticalNavLink routerLink="./payroll/employers" routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="dollar-bill" title="Payroll"></clr-icon>
+        Payroll
       </a>
     </clr-vertical-nav>
   </div>

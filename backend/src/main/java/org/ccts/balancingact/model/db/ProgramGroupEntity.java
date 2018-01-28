@@ -22,17 +22,17 @@ public class ProgramGroupEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "admin_id", foreignKey = @ForeignKey(name = "fk_program_groups_users_id"))
-    private AdministratorEntity admin;
+    private AdministratorEntity administrator;
 
     @OneToMany(mappedBy = "programGroup")
     private List<ProgramGroupStudentEntity> students;
 
     public AdministratorEntity getAdmin() {
-        return admin;
+        return administrator;
     }
 
     public void setAdmin(AdministratorEntity admin) {
-        this.admin = admin;
+        this.administrator = admin;
     }
 
     public String getName() {

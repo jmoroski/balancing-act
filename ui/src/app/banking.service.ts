@@ -19,27 +19,27 @@ export class BankingService extends BaseService {
   }
 
   getBankAccountSummaries(): Observable<BankAccountSummary[]> {
-    return this.http.get(`${this.basePath}/banks/accounts`) as Observable<BankAccountSummary[]>;
+    return this.http.get(`${this.basePath}/banking/accounts`) as Observable<BankAccountSummary[]>;
   }
 
   getBankAccount(id: ObjectId): Observable<BankAccountSummary> {
-    return this.http.get(`${this.basePath}/banks/accounts/${id}`) as Observable<BankAccountSummary>;
+    return this.http.get(`${this.basePath}/banking/accounts/${id}`) as Observable<BankAccountSummary>;
   }
 
   getBankAccountTransactions(id: ObjectId): Observable<BankAccountTransaction[]> {
-    return this.http.get(`${this.basePath}/banks/accounts/${id}/transactions`) as Observable<BankAccountTransaction[]>;
+    return this.http.get(`${this.basePath}/banking/accounts/${id}/transactions`) as Observable<BankAccountTransaction[]>;
   }
 
   addBankAccountTransaction(transaction: BankAccountTransaction): Observable<BankAccountTransaction> {
-    return this.http.post(`${this.basePath}/banks/accounts/${transaction.accountId}/transactions`, transaction) as Observable<BankAccountTransaction>;
+    return this.http.post(`${this.basePath}/banking/accounts/${transaction.accountId}/transactions`, transaction) as Observable<BankAccountTransaction>;
   }
 
   updateBankAccountTransaction(transaction: BankAccountTransaction): Observable<BankAccountTransaction> {
-    return this.http.put(`${this.basePath}/banks/accounts/${transaction.accountId}/transactions/${transaction.id}`, transaction) as Observable<BankAccountTransaction>;
+    return this.http.put(`${this.basePath}/banking/transactions/${transaction.id}`, transaction) as Observable<BankAccountTransaction>;
   }
 
   deleteBankAccountTransaction(transaction: BankAccountTransaction): Observable<any> {
-    return this.http.delete(`${this.basePath}/banks/accounts/${transaction.accountId}/transactions/${transaction.id}`) as Observable<any>;
+    return this.http.delete(`${this.basePath}/banking/transactions/${transaction.id}`) as Observable<any>;
   }
 
   modifyTransactions(accountId: ObjectId): void {

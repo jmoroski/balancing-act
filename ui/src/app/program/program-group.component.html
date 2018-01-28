@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-header">
+    {{programGroup.name}}
+  </div>
+  <div class="card-block">
+    <div class="card-title">
+      Administrator: {{programGroup.administrator | baDisplayName}}
+    </div>
+    <div class="card-text">
+      <div>
+        Number of Students: 0
+        <clr-signpost>
+          <clr-signpost-content>
+            <h6>Students</h6>
+            <ul class="list-unstyled">
+              <li *ngFor='let student of programGroup.students'>{{student}}</li>
+            </ul>
+          </clr-signpost-content>
+        </clr-signpost>
+      </div>
+      <div>
+        Service Rules: 0
+        <clr-signpost>
+          <clr-signpost-content>
+            <h6>Service Rules</h6>
+            <ul class="list-unstyled">
+              <li *ngFor='let student of programGroup.students'>{{student}}</li>
+            </ul>
+          </clr-signpost-content>
+        </clr-signpost>
+      </div>
+      <div>
+        Payroll Rules: 0
+        <clr-signpost>
+          <clr-signpost-content>
+            <h6>Payroll Rules</h6>
+            <ul class="list-unstyled">
+              <li *ngFor='let student of programGroup.students'>{{student}}</li>
+            </ul>
+          </clr-signpost-content>
+        </clr-signpost>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <clr-dropdown>
+      <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+          Actions
+          <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <clr-dropdown-menu *clrIfOpen>
+        <button type="button" clrDropdownItem (click)="editGroup()">Edit Group</button>
+        <button type="button" clrDropdownItem>Manage Students</button>
+        <clr-dropdown>
+            <button type="button" clrDropdownTrigger>Manage Rules</button>
+            <clr-dropdown-menu>
+                <button type="button" clrDropdownItem>Payroll</button>
+                <button type="button" clrDropdownItem>Services</button>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+        <button type="button" clrDropdownItem>Reports</button>
+        <div class="dropdown-divider"></div>
+        <button type="button" clrDropdownItem (click)="deleteProgramGroup()">Delete Group</button>
+      </clr-dropdown-menu>
+    </clr-dropdown>
+  </div>
+</div>

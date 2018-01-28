@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Service } from 'app/model/api/service';
 import { AddEditServiceComponent } from 'app/services/add-edit-service.component';
-import { ServicesService } from 'app/services.service';
+import { ServiceCompaniesService } from 'app/service-companies.service';
 
 @Component({
   selector: 'app-services',
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.scss'],
-  providers: [ServicesService]
+  providers: [ServiceCompaniesService]
 })
 export class ServicesComponent implements OnInit {
   private services: Service[];
@@ -15,37 +15,15 @@ export class ServicesComponent implements OnInit {
 
   @ViewChild("addEditServiceComponent") addEditServiceComponent: AddEditServiceComponent;
 
-  constructor(private servicesService: ServicesService) { }
+  constructor(private serviceCompaniesService: ServiceCompaniesService) { }
 
   ngOnInit() {
     this.loadData();
   }
 
-  addressString(service: Service): string {
-    if (service.contactInfo == null) {
-      return '';
-    }
-
-    var address: string = '';
-    if (service.contactInfo.address1 != null) {
-      address += `${service.contactInfo.address1}`
-      address += '<br />';
-    }
-    if (service.contactInfo.address2 != null) {
-      address += `${service.contactInfo.address2}`;
-      address += '<br />';
-    }
-
-    if (service.contactInfo.city != null) {
-      address += `${service.contactInfo.city}, ${service.contactInfo.state} ${service.contactInfo.zip}`;
-    }
-
-    return address;
-  }
-
   loadData() {
     this.loading = true;
-    this.servicesService.getServices().subscribe(
+    this.serviceCompaniesService.getServices().subscribe(
       data => {
         this.services = data;
         this.loading = false;
@@ -62,7 +40,7 @@ export class ServicesComponent implements OnInit {
   }
 
   deleteService(service: Service) {
-    this.servicesService.deleteService(service).subscribe(
+    this.serviceCompaniesService.deleteService(service).subscribe(
       data => {
         this.loadData();
       }

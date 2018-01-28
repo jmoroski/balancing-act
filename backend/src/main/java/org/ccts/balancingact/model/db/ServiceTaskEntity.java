@@ -1,6 +1,6 @@
 package org.ccts.balancingact.model.db;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +10,6 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.ccts.balancingact.model.common.TaskFrequency;
@@ -26,20 +24,23 @@ public class ServiceTaskEntity extends BaseEntity {
     private ServiceEntity service;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TaskFrequency frequency;
 
     @Column(nullable = false)
     private String name;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
 
     public String getName() {
         return name;
+    }
+
+    public void setService(ServiceEntity service) {
+        this.service = service;
     }
 }

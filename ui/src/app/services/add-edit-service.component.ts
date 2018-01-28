@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/cor
 import { Modal } from 'clarity-angular';
 import { Service } from 'app/model/api/service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { ServicesService } from 'app/services.service';
+import { ServiceCompaniesService } from 'app/service-companies.service';
 
 @Component({
   selector: 'app-add-edit-service',
@@ -19,7 +19,7 @@ export class AddEditServiceComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private servicesService: ServicesService) {
+  constructor(private formBuilder: FormBuilder, private serviceCompaniesService: ServiceCompaniesService) {
     this.service = this.defaultService();
     this.formGroup = this.formBuilder.group({
       name: ['', Validators.required],
@@ -73,14 +73,14 @@ export class AddEditServiceComponent implements OnInit {
     this.service.contactInfo.zip = this.formGroup.get('zip').value;
 
     if (this.service.id == null) {
-      this.servicesService.addService(this.service).subscribe(
+      this.serviceCompaniesService.addService(this.service).subscribe(
         data => {
           this.close();
           this.submitted.emit();
         }
       );
     } else {
-      this.servicesService.updateService(this.service).subscribe(
+      this.serviceCompaniesService.updateService(this.service).subscribe(
         data => {
           this.close();
           this.submitted.emit();

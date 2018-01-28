@@ -1,0 +1,50 @@
+<button class="btn btn-sm btn-link" routerLink="/payroll/employers">Employers</button>
+<h5>Payroll Rules<span *ngIf="payrollCompany"> for {{payrollCompany.name}}</span></h5>
+<clr-datagrid [clrDgLoading]="loading">
+  <clr-dg-action-bar>
+    <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-primary" (click)="addPayrollRule()">
+        <clr-icon shape="plus"></clr-icon> Add Payroll Rule</button>
+    </div>
+  </clr-dg-action-bar>
+  <clr-dg-column>Rule Name</clr-dg-column>
+  <clr-dg-column>Total Amount</clr-dg-column>
+  <clr-dg-column>Frequency</clr-dg-column>
+  <clr-dg-column>Start Date</clr-dg-column>
+  <clr-dg-column>End Date</clr-dg-column>
+
+  <clr-dg-placeholder>No payroll rules have been created.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let payrollRule of payrollRules" [clrDgItem]="payrollRule">
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="editPayrollRule(billingRule)">Edit Rule</button>
+      <button class="action-item" routerLink="./{{payrollRule.id}}">Manage Items</button>
+      <button class="action-item" (click)="deletePayrollRule(payrollRule)">Delete Rule</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{payrollRule.name}}</clr-dg-cell>
+    <clr-dg-cell>{{totalAmount(payrollRule) | baCurrency}}</clr-dg-cell>
+    <clr-dg-cell>{{payrollRule.frequency}}</clr-dg-cell>
+    <clr-dg-cell>{{payrollRule.startDate | date:'MM/dd/yyyy'}}</clr-dg-cell>
+    <clr-dg-cell>{{payrollRule.endDate | date:'MM/dd/yyyy'}}</clr-dg-cell>
+    <clr-dg-row-detail *clrIfExpanded>
+      <table class="table table-compact" style="width:90%" *ngIf="billingRule.items else empty">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th style="text-align:right; width:15%">Quantity</th>
+            <th style="text-align:right; width:15%">Rate</th>
+            <th style="text-align:right; width:15%">Amount</th>
+          </tr>
+          <tr *ngFor="let item of payrollRule.items">
+            <td class="left">{{item.description}}</td>
+            <td style="text-align:right">{{item.quantity}}</td>
+            <td style="text-align:right">{{item.rate}}</td>
+            <td style="text-align:right">{{item.amount | baCurrency}}</td>
+          </tr>
+        </thead>
+      </table>
+      <ng-template #empty><p>No payroll rule items defined. <a routerLink='./{{payrollRule.id}}'>Click here</a> to create items.</p></ng-template>
+    </clr-dg-row-detail>
+  </clr-dg-row>
+  <clr-dg-footer>{{billingRules?.length || 0}} rules</clr-dg-footer>
+</clr-datagrid>
+<app-add-edit-payroll-rule #addEditComponent (submitted)="loadData()"></app-add-edit-payroll-rule>

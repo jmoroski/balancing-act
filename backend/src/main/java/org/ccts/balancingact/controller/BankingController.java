@@ -9,7 +9,6 @@ import org.ccts.balancingact.model.api.BankAccountTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(path = "/banks")
+@RequestMapping(path = "/api/banking")
 public class BankingController {
     @Autowired
     private BankingDao bankingDao;
@@ -46,12 +44,18 @@ public class BankingController {
         return new ResponseEntity<>(bankingDao.addAccountTransaction(transaction), HttpStatus.CREATED);
     }
 
-    @PutMapping(path = "/accounts/{accountId}/transactions/{transactionId}")
+    @PutMapping(path = {
+        "/accounts/{accountId}/transactions/{transactionId}",
+        "/transactions/{transactionId}"
+    })
     public ResponseEntity<BankAccountTransaction> updateAccountTransaction(@RequestBody final BankAccountTransaction transaction) {
         return new ResponseEntity<>(bankingDao.updateAccountTransaction(transaction), HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/accounts/{accountId}/transactions/{transactionId}")
+    @DeleteMapping(path = {
+        "/accounts/{accountId}/transactions/{transactionId}",
+        "/transactions/{transactionId}"
+    })
     public ResponseEntity<Void> removeAccountTransaction(@PathVariable String transactionId) {
         bankingDao.removeTransaction(UUID.fromString(transactionId));
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

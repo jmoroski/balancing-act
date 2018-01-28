@@ -1,0 +1,21 @@
+<button class="btn btn-link" routerLink="/programs">&lt; Program Groups</button>
+<h5>Manage Group<span *ngIf="programGroup">{{ programGroup.name}}</span></h5>
+<clr-tabs>
+  <clr-tab>
+    <button clrTabLink>Students</button>
+    <clr-tab-content *clrIfActive>
+    </clr-tab-content>
+  </clr-tab>
+
+  <clr-tab>
+    <button clrTabLink>Rules</button>
+    <clr-tab-content *clrIfActive>
+    </clr-tab-content>
+  </clr-tab>
+
+  <clr-tab>
+    <button clrTabLink>Reports</button>
+    <clr-tab-content *clrIfActive>
+    </clr-tab-content>
+  </clr-tab>
+</clr-tabs>

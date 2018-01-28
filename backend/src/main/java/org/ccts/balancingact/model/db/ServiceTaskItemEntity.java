@@ -1,5 +1,7 @@
 package org.ccts.balancingact.model.db;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -16,4 +18,35 @@ public class ServiceTaskItemEntity extends BaseEntity {
 
     @Embedded
     private ItemDetails item;
+
+    ServiceTaskItemEntity() {}
+
+
+    public BigDecimal getAmount() {
+        return item.getAmount();
+    }
+
+    public String getDescription() {
+        return item.getDescription();
+    }
+
+    public int getQuantity() {
+        return item.getQuantity();
+    }
+
+    public float getRate() {
+        return item.getRate();
+    }
+
+    public boolean isCalculated() {
+        return item.isCalculated();
+    }
+
+    public ServiceTaskEntity getServiceTask() {
+        return serviceTask;
+    }
+
+    public void setServiceTask(ServiceTaskEntity serviceTask) {
+        this.serviceTask = serviceTask;
+    }
 }

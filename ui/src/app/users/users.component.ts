@@ -25,28 +25,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     );
   }
 
-  addressString(user: User): string {
-    if (user.contactInfo == null) {
-      return '';
-    }
-
-    var address: string = '';
-    if (user.contactInfo.address1 != null) {
-      address += `${user.contactInfo.address1}`
-      address += '<br />';
-    }
-    if (user.contactInfo.address2 != null) {
-      address += `${user.contactInfo.address2}`;
-      address += '<br />';
-    }
-
-    if (user.contactInfo.city != null) {
-      address += `${user.contactInfo.city}, ${user.contactInfo.state} ${user.contactInfo.zip}`;
-    }
-
-    return address;
-  }
-
   ngOnInit() {
     this.reloadData();
   }

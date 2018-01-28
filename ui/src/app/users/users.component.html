@@ -15,7 +15,7 @@
           <button class="action-item" (click)="deleteUser(user)">Delete</button>
       </clr-dg-action-overflow>
       <clr-dg-cell>{{user | baDisplayName}} </clr-dg-cell>
-      <clr-dg-cell><div [innerHtml]="addressString(user)"></div></clr-dg-cell>
+      <clr-dg-cell><span class="line-breaker">{{user.contactInfo | baAddress}}</span></clr-dg-cell>
       <clr-dg-cell>{{user.userType}}</clr-dg-cell>
   </clr-dg-row>
 

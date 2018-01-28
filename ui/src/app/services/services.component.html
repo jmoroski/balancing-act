@@ -1,38 +1,25 @@
-<clr-tabs>
-  <clr-tab>
-    <button clrTabLink>Companies</button>
-    <clr-tab-content>
-      <clr-datagrid [clrDgLoading]="loading">
-        <clr-dg-action-bar>
-          <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-primary" (click)="addService()">
-              <clr-icon shape="plus"></clr-icon> Add Company</button>
-          </div>
-        </clr-dg-action-bar>
-        <clr-dg-column>Company Name</clr-dg-column>
-        <clr-dg-column>Address</clr-dg-column>
+<h3>Companies</h3>
+<clr-datagrid [clrDgLoading]="loading">
+  <clr-dg-action-bar>
+    <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-primary" (click)="addService()">
+        <clr-icon shape="plus"></clr-icon> Add Company</button>
+    </div>
+  </clr-dg-action-bar>
+  <clr-dg-column>Company Name</clr-dg-column>
+  <clr-dg-column>Address</clr-dg-column>
 
-        <clr-dg-placeholder>No service companies have been created.</clr-dg-placeholder>
-        <clr-dg-row *clrDgItems="let service of services" [clrDgItem]="service">
-          <clr-dg-action-overflow>
-            <button class="action-item" (click)="editService(service)">Edit</button>
-            <button class="action-item" (click)="deleteService(service)">Delete</button>
-          </clr-dg-action-overflow>
-          <clr-dg-cell>{{service.name}}</clr-dg-cell>
-          <clr-dg-cell>
-            <div [innerHtml]="addressString(service)"></div>
-          </clr-dg-cell>
-        </clr-dg-row>
+  <clr-dg-placeholder>No service companies have been created.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let service of services" [clrDgItem]="service">
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="editService(service)">Edit</button>
+      <button class="action-item" routerLink="./{{service.id}}/billingRules">Manage Billing Rules</button>
+      <button class="action-item" (click)="deleteService(service)">Delete</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{service.name}}</clr-dg-cell>
+    <clr-dg-cell><span class="line-breaker">{{service.contactInfo | baAddress}}</span></clr-dg-cell>
+  </clr-dg-row>
 
-        <clr-dg-footer>{{services?.length}} services</clr-dg-footer>
-      </clr-datagrid>
-    </clr-tab-content>
-  </clr-tab>
-  <clr-tab>
-    <button clrTabLink>Billing Rules</button>
-    <clr-tab-content>
-      <p>Billing Rules</p>
-    </clr-tab-content>
-  </clr-tab>
-</clr-tabs>
+  <clr-dg-footer>{{services?.length}} services</clr-dg-footer>
+</clr-datagrid>
 <app-add-edit-service #addEditServiceComponent (submitted)="loadData()"></app-add-edit-service>

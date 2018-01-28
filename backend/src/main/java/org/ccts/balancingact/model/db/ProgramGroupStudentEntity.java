@@ -19,4 +19,11 @@ public class ProgramGroupStudentEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false, foreignKey = @ForeignKey(name = "fk_program_group_students_users_id"))
     private StudentEntity student;
+
+    ProgramGroupStudentEntity() {}
+
+    public ProgramGroupStudentEntity(final ProgramGroupEntity programGroup, final StudentEntity student) {
+        this.programGroup = programGroup;
+        this.student = student;
+    }
 }

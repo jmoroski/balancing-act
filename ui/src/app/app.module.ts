@@ -1,36 +1,20 @@
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { ClarityModule } from 'clarity-angular';
 import { AppComponent } from './app.component';
 import { ROUTING } from "./app.routing";
-import { UsersComponent } from './users/users.component';
-import { HttpClientModule } from "@angular/common/http";
-import { AddEditUserComponent } from "app/users/add-edit-user.component";
-import { ServicesComponent } from './services/services.component';
-import { AddEditServiceComponent } from './services/add-edit-service.component';
+import { BaseModule } from "app/base.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        UsersComponent,
-        AddEditUserComponent,
-        ServicesComponent,
-        AddEditServiceComponent,
+        AppComponent
     ],
     imports: [
         BrowserAnimationsModule,
         BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpModule,
-        HttpClientModule,
-        ClarityModule,
+        BaseModule,
         ROUTING
     ],
-    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

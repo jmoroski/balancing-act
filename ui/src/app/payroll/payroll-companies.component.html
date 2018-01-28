@@ -1,0 +1,25 @@
+<h3>Employers</h3>
+<clr-datagrid [clrDgLoading]="loading">
+  <clr-dg-action-bar>
+    <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-primary" (click)="addPayrollCompany()">
+        <clr-icon shape="plus"></clr-icon> Add Employer</button>
+    </div>
+  </clr-dg-action-bar>
+  <clr-dg-column>Employer Name</clr-dg-column>
+  <clr-dg-column>Address</clr-dg-column>
+
+  <clr-dg-placeholder>No employers have been created.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let payrollCompany of payrollCompanies" [clrDgItem]="payrollCompany">
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="editPayrollCompany(payrollCompany)">Edit</button>
+      <button class="action-item" routerLink="./{{payrollCompany.id}}/payrollRules">Manage Payroll Rules</button>
+      <button class="action-item" (click)="deletePayrollCompany(payrollCompany)">Delete</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{payrollCompany.name}}</clr-dg-cell>
+    <clr-dg-cell><span class="line-breaker">{{payrollCompany.contactInfo | baAddress}}</span></clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>{{payrollCompanies?.length}} employers</clr-dg-footer>
+</clr-datagrid>
+<app-add-edit-payroll-company #addEditPayrollCompanyComponent (submitted)="loadData()"></app-add-edit-payroll-company>

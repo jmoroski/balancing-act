@@ -1,0 +1,16 @@
+<h3>Program Groups</h3>
+<div>
+    <button class="btn btn-sm btn-primary" (click)="addProgramGroup()">
+      <clr-icon shape="add"></clr-icon>
+      Add Program Group
+    </button>
+</div>
+<div class="row">
+  <span *ngIf="loading else loaded" class="spinner">
+    Loading...
+  </span>
+  <ng-template #loaded>
+    <div app-program-group *ngFor='let programGroup of programGroups' [programGroup]='programGroup' class="col-lg-4 col-md-6 col-sm-6 col-xs-12"></div>
+  </ng-template>
+</div>
+<app-add-edit-program-group #addEditComponent></app-add-edit-program-group>

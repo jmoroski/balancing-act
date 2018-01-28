@@ -1,5 +1,5 @@
 <button class="btn btn-link" routerLink="../">&lt; Bank Accounts</button>
-<h3>Account Details</h3>
+<h5>Account Details</h5>
 <div *ngIf="bankAccount">
   <table class="table table-vertical table-noborder">
     <tr>
@@ -19,7 +19,7 @@
       <td>{{bankAccount.balance | baCurrency}}</td>
     </tr>
   </table>
-  <h3>Transactions</h3>
+  <h5>Transactions</h5>
   <clr-datagrid [clrDgLoading]="transactionsLoading">
     <clr-dg-action-bar>
       <div class="btn-group">

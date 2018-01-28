@@ -8,6 +8,8 @@ import { BankAccountSummary } from 'app/model/api/bankAccountSummary';
 import { AddEditTransactionComponent } from 'app/banking/add-edit-transaction.component';
 import { Subscription } from 'rxjs/Subscription';
 
+import 'rxjs/add/operator/switchMap';
+
 @Component({
   selector: 'app-account-details',
   templateUrl: './account-details.component.html',
@@ -42,15 +44,15 @@ export class AccountDetailsComponent implements OnInit, OnDestroy {
   private loadData(): void {
     this.transactionsLoading = true;
     const id: string = this.route.snapshot.paramMap.get('id');
-    this.bankingService.getBankAccount(id).subscribe(
+    this.bankingService.getBankAccount(id).switchMap(
       bankAccount => {
         this.bankAccount = bankAccount;
-        this.bankingService.getBankAccountTransactions(this.bankAccount.accountId).subscribe(
-          transactions => {
-            this.transactions = transactions;
-            this.transactionsLoading = false;
-          }
-        )
+        return this.bankingService.getBankAccountTransactions(this.bankAccount.accountId);
+      }
+    ).subscribe(
+      transactions => {
+        this.transactions = transactions;
+        this.transactionsLoading = false;
       }
     );
   }

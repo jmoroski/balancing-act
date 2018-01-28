@@ -1,0 +1,48 @@
+import { Injectable } from '@angular/core';
+import { BaseService } from 'app/base.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { ProgramGroup } from 'app/model/api/programGroup';
+import { ObjectId } from 'app/model/api/objectId';
+
+@Injectable()
+export class ProgramService extends BaseService {
+  private programGroupsModifiedSource: Subject<any> = new Subject<any>();
+  private programGroupsModified$: Observable<any>;
+
+  constructor(private http: HttpClient) {
+    super();
+    this.programGroupsModified$ = this.programGroupsModifiedSource.asObservable();
+  }
+
+  getProgramGroups(): Observable<ProgramGroup[]> {
+    return this.http.get<ProgramGroup[]>(`${this.basePath}/programGroups`);
+  }
+
+  getProgramGroup(id: ObjectId): Observable<ProgramGroup> {
+    return this.http.get<ProgramGroup>(`${this.basePath}/programGroups/${id}`);
+  }
+
+  addProgramGroup(programGroup: ProgramGroup): Observable<ProgramGroup> {
+    return this.http.post<ProgramGroup>(`${this.basePath}/programGroups`, programGroup);
+  }
+
+  editProgramGroup(programGroup: ProgramGroup): Observable<ProgramGroup> {
+    return this.http.put<ProgramGroup>(`${this.basePath}/programGroups`, programGroup);
+  }
+
+  deleteProgramGroup(programGroup: ProgramGroup): Observable<ProgramGroup> {
+    return this.http.delete<ProgramGroup>(`${this.basePath}/programGroups/${programGroup.id}`);
+  }
+  
+  onModifyProgramGroups() {
+    this.programGroupsModifiedSource.next();
+  }
+
+  programGroupsModified(): Observable<any> {
+    return this.programGroupsModified$;
+  }
+
+
+}

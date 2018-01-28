@@ -1,0 +1,28 @@
+<button class="btn btn-sm btn-link" routerLink="/services/companies">Companies</button>&gt;<button class="btn btn-sm btn-link" routerLink="../">Billing Rules</button>
+<h5>Billing Rules Items<span *ngIf="service"> for {{service.name}}</span></h5>
+<clr-datagrid [clrDgLoading]="loading">
+  <clr-dg-action-bar>
+    <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-primary" (click)="addBillingRuleItem()">
+        <clr-icon shape="plus"></clr-icon> Add Item</button>
+    </div>
+  </clr-dg-action-bar>
+  <clr-dg-column>Description</clr-dg-column>
+  <clr-dg-column>Quantity</clr-dg-column>
+  <clr-dg-column>Rate</clr-dg-column>
+  <clr-dg-column>Amount</clr-dg-column>
+
+  <clr-dg-placeholder>No billing rule items have been created.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let item of items" [clrDgItem]="item">
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="editBillingRule(billingRule)">Edit Item</button>
+      <button class="action-item" (click)="deleteBillingRule(billingRule)">Delete Item</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{item.description}}</clr-dg-cell>
+    <clr-dg-cell>{{item.quantity}}</clr-dg-cell>
+    <clr-dg-cell>{{item.rate}}</clr-dg-cell>
+    <clr-dg-cell>{{item.amount}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>{{items?.length || 0}} rules</clr-dg-footer>
+</clr-datagrid>
+<app-add-billing-rule-item #addBillingRuleItemComponent (submitted)="loadData()"></app-add-billing-rule-item>

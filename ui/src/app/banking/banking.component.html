@@ -1,25 +1,18 @@
 <h3>Bank Accounts</h3>
 <clr-datagrid [clrDgLoading]="loading">
-    <!-- <clr-dg-action-bar>
-      <div class="btn-group">
-        <button type="button" class="btn btn-sm btn-primary" (click)="addBankAccount()">
-          <clr-icon shape="plus"></clr-icon> Add Company</button>
-      </div>
-    </clr-dg-action-bar> -->
-    <clr-dg-column>Account Holder</clr-dg-column>
-    <clr-dg-column>Account Name</clr-dg-column>
-    <clr-dg-column>Balance</clr-dg-column>
-  
-    <clr-dg-placeholder>No bank accounts have been created.</clr-dg-placeholder>
-    <clr-dg-row *clrDgItems="let accountSummary of accountSummaries" [clrDgItem]="accountSummary">
-      <clr-dg-action-overflow>
-        <button class="action-item" routerLink="./{{accountSummary.accountId}}">Account Details</button>
-      </clr-dg-action-overflow>
-      <clr-dg-cell>{{ {firstName: accountSummary.ownerFirstName, lastName: accountSummary.ownerLastName} | baDisplayName}}</clr-dg-cell>
-      <clr-dg-cell>{{accountSummary.accountName}}</clr-dg-cell>
-      <clr-dg-cell>{{accountSummary.balance | baCurrency}}</clr-dg-cell>
-    </clr-dg-row>
-  
-    <clr-dg-footer>{{accountSummaries?.length}} services</clr-dg-footer>
-  </clr-datagrid>
-  <!-- <app-add-edit-service #addEditServiceComponent (submitted)="loadData()"></app-add-edit-service> -->
+  <clr-dg-column>Account Holder</clr-dg-column>
+  <clr-dg-column>Account Name</clr-dg-column>
+  <clr-dg-column>Balance</clr-dg-column>
+
+  <clr-dg-placeholder>No bank accounts have been created.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let accountSummary of accountSummaries" [clrDgItem]="accountSummary">
+    <clr-dg-action-overflow>
+      <button class="action-item" routerLink="./{{accountSummary.accountId}}">Account Details</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{ {firstName: accountSummary.ownerFirstName, lastName: accountSummary.ownerLastName} | baDisplayName}}</clr-dg-cell>
+    <clr-dg-cell>{{accountSummary.accountName}}</clr-dg-cell>
+    <clr-dg-cell>{{accountSummary.balance | baCurrency}}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>{{accountSummaries?.length}} services</clr-dg-footer>
+</clr-datagrid>
