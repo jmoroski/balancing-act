@@ -1045,17 +1045,17 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-clarity-angular@^0.10.0:
-  version "0.10.19"
-  resolved "https://registry.yarnpkg.com/clarity-angular/-/clarity-angular-0.10.19.tgz#3d2185fcb5f1b08cea9a0af923a1dbce4e9574ff"
+clarity-angular@^0.10.22:
+  version "0.10.22"
+  resolved "https://registry.yarnpkg.com/clarity-angular/-/clarity-angular-0.10.22.tgz#05125637f032197c4bb7a4667ba83e85cf32acc8"
 
-clarity-icons@^0.10.0:
-  version "0.10.19"
-  resolved "https://registry.yarnpkg.com/clarity-icons/-/clarity-icons-0.10.19.tgz#c7aa7e2ad21f5384688beaaa364669b971c8d2a0"
+clarity-icons@^0.10.22:
+  version "0.10.22"
+  resolved "https://registry.yarnpkg.com/clarity-icons/-/clarity-icons-0.10.22.tgz#ef2396a6135339b81a0ebcb29b5e0bf9730a199a"
 
-clarity-ui@^0.10.0:
-  version "0.10.19"
-  resolved "https://registry.yarnpkg.com/clarity-ui/-/clarity-ui-0.10.19.tgz#45c9c0d1d42a33dcd686c91419f51aaa5b1941eb"
+clarity-ui@^0.10.22:
+  version "0.10.22"
+  resolved "https://registry.yarnpkg.com/clarity-ui/-/clarity-ui-0.10.22.tgz#6c0e16f1e9ed850533dfd540d174be20c8bab727"
 
 clean-css@4.1.x:
   version "4.1.9"
