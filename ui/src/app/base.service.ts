@@ -1,5 +1,5 @@
 export abstract class BaseService {
-  protected basePath: string = 'http://localhost:8080';
+  protected basePath: string = '/api';
 
   constructor() { }
 }
