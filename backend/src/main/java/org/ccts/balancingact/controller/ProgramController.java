@@ -45,15 +45,20 @@ public class ProgramController {
         return new ResponseEntity<>(programDao.getProgramGroup(id), HttpStatus.OK);
     }
 
-      @GetMapping(path = "{id}/students")
-      public ResponseEntity<List<Student>> getProgramGroupStudents(@PathVariable UUID id) {
-          return new ResponseEntity<>(programDao.getProgramGroupStudents(id), HttpStatus.OK);
-      }
+    @GetMapping(path = "{id}/students")
+    public ResponseEntity<List<Student>> getProgramGroupStudents(@PathVariable UUID id) {
+        return new ResponseEntity<>(programDao.getProgramGroupStudents(id), HttpStatus.OK);
+    }
 
-      @PutMapping(path = "{id}/students")
-      public ResponseEntity<List<Student>> setProgramGroupStudents(@PathVariable UUID id, @RequestBody List<Student> students) {
-          return new ResponseEntity<>(programDao.setProgramGroupStudents(id, students), HttpStatus.OK);
-      }
+    @GetMapping(path = "{id}/eligibleStudents")
+    public ResponseEntity<List<Student>> getEligibleProgramGroupStudents(@PathVariable UUID id) {
+        return new ResponseEntity<>(programDao.getEligibleProgramGroupStudents(id), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "{id}/students")
+    public ResponseEntity<List<Student>> setProgramGroupStudents(@PathVariable UUID id, @RequestBody List<Student> students) {
+        return new ResponseEntity<>(programDao.setProgramGroupStudents(id, students), HttpStatus.OK);
+    }
 
 
 

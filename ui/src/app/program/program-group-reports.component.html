@@ -1,0 +1,113 @@
+<div *ngIf="programGroup else emptyReports" class="row">
+  <div class="card">
+    <div class="card-header">Invoices By Group</div>
+    <div class="card-block">
+      <div class="card-title">Generate all invoices for each student in the group for specified date range</div>
+      <div class="card-text">
+        <form class="compact" [formGroup]="invoiceByGroupFormGroup" (ngSubmit)="submit()">
+          <section class="form-block">
+            <div class="form-group">
+              <label>Start Date</label>
+              <input type="date" formControlName="startDate">
+            </div>
+            <div class="form-group">
+              <label>End Date</label>
+              <input type="date" formControlName="endDate">
+            </div>
+          </section>
+        </form>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary" (click)="generateInvoicesByGroup()" [disabled]="!invoiceByGroupFormGroup.valid">
+          Generate
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Payroll By Group</div>
+    <div class="card-block">
+      <div class="card-title">Generate all pay stubs for each student in the group for specified date range</div>
+      <div class="card-text">
+        <form class="compact" [formGroup]="payrollByGroupFormGroup" (ngSubmit)="submit()">
+          <section class="form-block">
+            <div class="form-group">
+              <label>Start Date</label>
+              <input type="date" formControlName="startDate">
+            </div>
+            <div class="form-group">
+              <label>End Date</label>
+              <input type="date" formControlName="endDate">
+            </div>
+          </section>
+        </form>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary" (click)="generatePayrollByGroup()" [disabled]="!payrollByGroupFormGroup.valid">
+          Generate
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Banking By Group</div>
+    <div class="card-block">
+      <div class="card-title">Generate all bank statements for each student in the group for specified date range</div>
+      <div class="card-text">
+        <form class="compact" [formGroup]="bankingByGroupFormGroup"  (ngSubmit)="submit()">
+          <section class="form-block">
+            <div class="form-group">
+              <label>Start Date</label>
+              <input type="date" formControlName="startDate">
+            </div>
+            <div class="form-group">
+              <label>End Date</label>
+              <input type="date" formControlName="endDate">
+            </div>
+          </section>
+        </form>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary" (click)="generateBankingByGroup()" [disabled]="!bankingByGroupFormGroup.valid">
+          Generate
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Documents by Student</div>
+    <div class="card-block">
+      <div class="card-title">Generate all invoices, pay stubs and bank statements for selected student for specified date range</div>
+      <div class="card-text">
+        <form class="compact" (ngSubmit)="submit()">
+          <section class="form-block">
+            <div class="form-group">
+              <label>Student</label>
+              <div class="select">
+                <select>
+                  <option *ngFor="let student of students" [ngValue]="student">{{student | baDisplayName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Start Date</label>
+              <input type="date">
+            </div>
+            <div class="form-group">
+              <label>End Date</label>
+              <input type="date">
+            </div>
+          </section>
+        </form>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary">
+          Generate
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #emptyReports>
+  <p>No reports to display.</p>
+</ng-template>

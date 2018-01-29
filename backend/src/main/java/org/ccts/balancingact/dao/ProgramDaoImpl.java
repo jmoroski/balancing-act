@@ -7,7 +7,6 @@ import org.ccts.balancingact.model.ModelMapperUtils;
 import org.ccts.balancingact.model.api.ProgramGroup;
 import org.ccts.balancingact.model.api.Student;
 import org.ccts.balancingact.model.db.AdministratorEntity;
-import org.ccts.balancingact.model.db.ProgramFlatTaxRateEntity;
 import org.ccts.balancingact.model.db.ProgramGroupEntity;
 import org.ccts.balancingact.model.db.ProgramGroupStudentEntity;
 import org.ccts.balancingact.model.db.StudentEntity;
@@ -16,7 +15,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
-import org.hibernate.internal.CriteriaImpl.Subcriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -62,10 +60,25 @@ public class ProgramDaoImpl implements ProgramDao {
     public List<Student> getProgramGroupStudents(UUID programGroupId) {
         DetachedCriteria programGroupStudentsCriteria = DetachedCriteria.forClass(ProgramGroupStudentEntity.class);
         programGroupStudentsCriteria.add(Restrictions.eq("programGroup.id", programGroupId));
-        programGroupStudentsCriteria.setProjection(Projections.id());
+        programGroupStudentsCriteria.setProjection(Projections.property("student.id"));
 
         DetachedCriteria criteria = DetachedCriteria.forClass(StudentEntity.class);
         criteria.add(Subqueries.propertyIn("id", programGroupStudentsCriteria));
+        criteria.addOrder(Order.asc("lastName"));
+        criteria.addOrder(Order.asc("firstName"));
+
+        return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), Student.class);
+    }
+
+    @Override
+    public List<Student> getEligibleProgramGroupStudents(UUID programGroupId) {
+        DetachedCriteria programGroupStudentsCriteria = DetachedCriteria.forClass(ProgramGroupStudentEntity.class);
+        programGroupStudentsCriteria.setProjection(Projections.property("student.id"));
+
+        DetachedCriteria criteria = DetachedCriteria.forClass(StudentEntity.class);
+        criteria.add(Subqueries.propertyNotIn("id", programGroupStudentsCriteria));
+        criteria.addOrder(Order.asc("lastName"));
+        criteria.addOrder(Order.asc("firstName"));
 
         return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), Student.class);
     }

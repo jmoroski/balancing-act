@@ -1,0 +1,21 @@
+<clr-datagrid [clrDgLoading]="loading">
+    <clr-dg-action-bar>
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-primary" (click)="addStudent()"><clr-icon shape="plus"></clr-icon> Add Student</button>
+        </div>
+    </clr-dg-action-bar>
+  <clr-dg-column>Full Name</clr-dg-column>
+  <clr-dg-column>Address</clr-dg-column>
+
+  <clr-dg-placeholder>No students have been assigned.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let student of students" [clrDgItem]="student">
+      <clr-dg-action-overflow>
+          <button class="action-item" (click)="deleteUser(student)">Remove From Group</button>
+      </clr-dg-action-overflow>
+      <clr-dg-cell>{{student | baDisplayName}} </clr-dg-cell>
+      <clr-dg-cell><span class="line-breaker">{{student.contactInfo | baAddress}}</span></clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>{{students?.length}} students</clr-dg-footer>
+</clr-datagrid>
+<app-add-program-group-students #addComponent></app-add-program-group-students>

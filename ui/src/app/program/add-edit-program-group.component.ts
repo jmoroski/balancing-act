@@ -30,9 +30,7 @@ export class AddEditProgramGroupComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getAdministrators().subscribe(administrators => {
-      this.administrators = administrators;
-    });
+    
   }
 
   private defaultProgramGroup(): ProgramGroup {
@@ -52,7 +50,11 @@ export class AddEditProgramGroupComponent implements OnInit {
 
   open(programGroup: ProgramGroup = this.defaultProgramGroup()): void {
     this.programGroup = programGroup;
+    this.formGroup.reset();
     this.opened = true;
+    this.userService.getAdministrators().subscribe(administrators => {
+      this.administrators = administrators;
+    });
   }
 
   private submit(): void {

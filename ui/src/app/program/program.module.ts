@@ -8,6 +8,10 @@ import { ProgramGroupComponent } from 'app/program/program-group.component';
 import { ProgramGroupDetailsComponent } from 'app/program/program-group-details.component';
 import { AddEditProgramGroupComponent } from './add-edit-program-group.component';
 import { ProgramService } from 'app/program.service';
+import { ProgramGroupReportsComponent } from './program-group-reports.component';
+import { ProgramGroupStudentsComponent } from './program-group-students.component';
+import { AddProgramGroupStudentsComponent } from './add-program-group-students.component';
+import { ReportService } from 'app/report.service';
 
 @NgModule({
   imports: [
@@ -19,10 +23,14 @@ import { ProgramService } from 'app/program.service';
     ProgramComponent,
     ProgramGroupComponent,
     ProgramGroupDetailsComponent,
-    AddEditProgramGroupComponent
+    AddEditProgramGroupComponent,
+    ProgramGroupReportsComponent,
+    ProgramGroupStudentsComponent,
+    AddProgramGroupStudentsComponent
   ],
   providers: [
-    ProgramService
+    ProgramService,
+    ReportService
   ]
 })
 export class ProgramModule { }

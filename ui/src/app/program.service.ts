@@ -5,11 +5,15 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { ProgramGroup } from 'app/model/api/programGroup';
 import { ObjectId } from 'app/model/api/objectId';
+import { Student } from 'app/model/api/student';
 
 @Injectable()
 export class ProgramService extends BaseService {
   private programGroupsModifiedSource: Subject<any> = new Subject<any>();
   private programGroupsModified$: Observable<any>;
+
+  private programGroupStudentssModifiedSource: Subject<any> = new Subject<any>();
+  private programGroupStudentsModified$: Observable<any>;
 
   constructor(private http: HttpClient) {
     super();
@@ -35,6 +39,18 @@ export class ProgramService extends BaseService {
   deleteProgramGroup(programGroup: ProgramGroup): Observable<ProgramGroup> {
     return this.http.delete<ProgramGroup>(`${this.basePath}/programGroups/${programGroup.id}`);
   }
+
+  getProgramGroupStudents(programGroup: ProgramGroup): Observable<Student[]> {
+    return this.http.get<Student[]>(`${this.basePath}/programGroups/${programGroup.id}/students`);
+  }
+
+  setProgramGroupStudents(programGroup: ProgramGroup, students: Student[]): Observable<Student[]> {
+    return this.http.put<Student[]>(`${this.basePath}/programGroups/${programGroup.id}/students`, students);
+  }
+
+  getEligibleProgramGroupStudents(programGroup: ProgramGroup): Observable<Student[]> {
+    return this.http.get<Student[]>(`${this.basePath}/programGroups/${programGroup.id}/eligibleStudents`);
+  }
   
   onModifyProgramGroups() {
     this.programGroupsModifiedSource.next();
@@ -44,5 +60,11 @@ export class ProgramService extends BaseService {
     return this.programGroupsModified$;
   }
 
+  modifyProgramGroupStudents() {
+    this.programGroupsModifiedSource.next();
+  }
 
+  programGroupStudentsModified(): Observable<any> {
+    return this.programGroupsModified$;
+  }
 }

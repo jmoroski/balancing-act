@@ -24,7 +24,7 @@ export class ProgramGroupDetailsComponent implements OnInit {
     });
 
     if (!this.route.snapshot.fragment) {
-      this.router.navigate([], {fragment: 'students', replaceUrl: true});
+      this.router.navigate([], {fragment: 'reports', replaceUrl: true});
     }
   }
 

@@ -1,31 +1,30 @@
 <button class="btn btn-link" routerLink="../">&lt; Program Groups</button>
-<h5>Manage Group <span *ngIf="programGroup">{{programGroup.name}}</span></h5>
+<h5>Manage Group
+  <span *ngIf="programGroup">{{programGroup.name}}</span>
+</h5>
 <clr-tabs>
+  <clr-tab>
+    <button clrTabLink [routerLink]="" fragment="reports">Reports</button>
+    <clr-tab-content *clrIfActive="hasFragment('reports')">
+      <app-program-group-reports [programGroup]="programGroup"></app-program-group-reports>
+    </clr-tab-content>
+  </clr-tab>
   <clr-tab>
     <button clrTabLink [routerLink]="" fragment="students">Students</button>
     <clr-tab-content *clrIfActive="hasFragment('students')">
-      students
+      <app-program-group-students [programGroup]="programGroup"></app-program-group-students>
     </clr-tab-content>
   </clr-tab>
-
   <clr-tab>
-    <button clrTabLink  [routerLink]="" fragment="payroll">Payroll</button>
+    <button clrTabLink [routerLink]="" fragment="payroll">Payroll</button>
     <clr-tab-content *clrIfActive="hasFragment('payroll')">
       payroll
     </clr-tab-content>
   </clr-tab>
-
   <clr-tab>
-      <button clrTabLink  [routerLink]="" fragment="services">Services</button>
-      <clr-tab-content *clrIfActive="hasFragment('services')">
-        services
-      </clr-tab-content>
-    </clr-tab>
-
-  <clr-tab>
-    <button clrTabLink  [routerLink]="" fragment="reports">Reports</button>
-    <clr-tab-content *clrIfActive="hasFragment('reports')">
-      reports
+    <button clrTabLink [routerLink]="" fragment="services">Services</button>
+    <clr-tab-content *clrIfActive="hasFragment('services')">
+      services
     </clr-tab-content>
   </clr-tab>
 </clr-tabs>
