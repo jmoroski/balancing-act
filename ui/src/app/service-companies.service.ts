@@ -6,6 +6,7 @@ import { BaseService } from 'app/base.service';
 import { ObjectId } from 'app/model/api/objectId';
 import { BillingRule } from 'app/model/api/billingRule';
 import { Subject } from 'rxjs/Subject';
+import { BillingRuleItem } from 'app/model/api/billingRuleItem';
 
 @Injectable()
 export class ServiceCompaniesService extends BaseService {
@@ -43,6 +44,14 @@ export class ServiceCompaniesService extends BaseService {
 
   deleteBillingRule(billingRule: BillingRule): Observable<any> {
     return this.http.delete(`${this.basePath}/services/${billingRule.serviceId}/billingRules/${billingRule.id}`) as Observable<any>;
+  }
+
+  getBillingRuleItems(billingRule: BillingRule): Observable<BillingRuleItem[]> {
+    return this.http.get<BillingRuleItem[]>(`${this.basePath}/services/billingRules/${billingRule.id}/items`);
+  }
+
+  addBillingRuleItem(billingRuleItem: BillingRuleItem): Observable<BillingRuleItem> {
+    return this.http.post<BillingRuleItem>(`${this.basePath}/services/billingRules/${billingRuleItem.billingRuleId}/items`, billingRuleItem);
   }
 
   addService(service: Service): Observable<Service> {

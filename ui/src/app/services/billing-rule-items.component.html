@@ -13,16 +13,16 @@
   <clr-dg-column>Amount</clr-dg-column>
 
   <clr-dg-placeholder>No billing rule items have been created.</clr-dg-placeholder>
-  <clr-dg-row *clrDgItems="let item of items" [clrDgItem]="item">
+  <clr-dg-row *clrDgItems="let item of billingRuleItems" [clrDgItem]="item">
     <clr-dg-action-overflow>
       <button class="action-item" (click)="editBillingRule(billingRule)">Edit Item</button>
       <button class="action-item" (click)="deleteBillingRule(billingRule)">Delete Item</button>
     </clr-dg-action-overflow>
     <clr-dg-cell>{{item.description}}</clr-dg-cell>
-    <clr-dg-cell>{{item.quantity}}</clr-dg-cell>
-    <clr-dg-cell>{{item.rate}}</clr-dg-cell>
-    <clr-dg-cell>{{item.amount}}</clr-dg-cell>
+    <clr-dg-cell style="text-align:right">{{item.quantity}}</clr-dg-cell>
+    <clr-dg-cell style="text-align:right">{{item.rate}}</clr-dg-cell>
+    <clr-dg-cell style="text-align:right">{{amount(item) | baCurrency}}</clr-dg-cell>
   </clr-dg-row>
-  <clr-dg-footer>{{items?.length || 0}} rules</clr-dg-footer>
+  <clr-dg-footer>{{billingRuleItems?.length || 0}} rules</clr-dg-footer>
 </clr-datagrid>
 <app-add-billing-rule-item #addBillingRuleItemComponent (submitted)="loadData()"></app-add-billing-rule-item>

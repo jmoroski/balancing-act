@@ -26,7 +26,7 @@
     <clr-dg-cell>{{billingRule.startDate | date:'MM/dd/yyyy'}}</clr-dg-cell>
     <clr-dg-cell>{{billingRule.endDate | date:'MM/dd/yyyy'}}</clr-dg-cell>
     <clr-dg-row-detail *clrIfExpanded>
-      <table class="table table-compact" style="width:90%" *ngIf="billingRule.items else empty">
+      <table class="table table-compact" style="width:90%" *ngIf="billingRule.items.length > 0 else empty">
         <thead>
           <tr>
             <th>Description</th>
@@ -38,7 +38,7 @@
             <td class="left">{{item.description}}</td>
             <td style="text-align:right">{{item.quantity}}</td>
             <td style="text-align:right">{{item.rate}}</td>
-            <td style="text-align:right">{{item.amount | baCurrency}}</td>
+            <td style="text-align:right">{{amount(item) | baCurrency}}</td>
           </tr>
         </thead>
       </table>

@@ -10,6 +10,7 @@ import { TaskFrequency } from 'app/model/api/taskFrequency';
 import 'rxjs/add/operator/switchMap';
 import { SimpleBillingRuleItem } from 'app/model/api/simpleBillingRuleItem';
 import { CalculatedBillingRuleItem } from 'app/model/api/calculatedBillingRuleItem';
+import { BillingRuleItem } from 'app/model/api/billingRuleItem';
 
 @Component({
   selector: 'app-billing-rules',
@@ -22,25 +23,7 @@ export class BillingRulesComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   @Input() private service: Service;
-  @Input() private billingRules: BillingRule[] = [
-    {
-      name: "Utility Bill Group 2", serviceName: "Howard Water Company", startDate: new Date("01/01/2018"), endDate: new Date("04/01/2018"), frequency: TaskFrequency.Monthly,
-      items: [
-        <SimpleBillingRuleItem>{description: "Service Charge", amount: 15}, 
-        <CalculatedBillingRuleItem>{description: "Gallons", quantity: 2000, rate: 0.007036},
-        <CalculatedBillingRuleItem>{description: "Gallons", quantity: 1000, rate: 0.00816}
-      ]
-    },
-    {
-      name: "Utility Bill", serviceName: "McGonigal Electric", startDate: new Date("01/01/2018"), endDate: new Date("06/01/2018"), frequency: TaskFrequency.Monthly,
-      items: [
-        <CalculatedBillingRuleItem>{description: "Usage charge", quantity: 164, rate: 0.153}, 
-        <CalculatedBillingRuleItem>{description: "Transmission charge", quantity: 164, rate: 0.0266},
-        <CalculatedBillingRuleItem>{description: "Distribution charge", quantity: 164, rate: 0.0233},
-        <CalculatedBillingRuleItem>{description: "Transition fee", quantity: 164, rate: 0.0137},
-      ]
-    },
-  ];
+  @Input() private billingRules: BillingRule[];
 
   @ViewChild("addEditBillingRuleComponent") addEditBillingRuleComponent: AddEditBillingRuleComponent;
 
@@ -75,16 +58,24 @@ export class BillingRulesComponent implements OnInit, OnDestroy {
   }
 
   totalAmount(billingRule: BillingRule): number {
-    var amount = 0;
+    var amount: number = 0.0;
     if (!billingRule.items) {
       return amount;
     }
     
     billingRule.items.forEach(item => {
-      amount += (<SimpleBillingRuleItem>item).amount;
+      if (item['quantity']) {
+        amount += ((<CalculatedBillingRuleItem>item).quantity * (<CalculatedBillingRuleItem>item).rate);
+      } else {
+        amount += (<SimpleBillingRuleItem>item).amount;
+      }
     });
 
     return amount;
+  }
+
+  amount(item: BillingRuleItem): number {
+    return item['amount'] ? (<SimpleBillingRuleItem>item).amount : ((<CalculatedBillingRuleItem>item).quantity * (<CalculatedBillingRuleItem>item).rate);
   }
 
   private addBillingRule(): void {

@@ -5,6 +5,7 @@ import { BillingRuleItem } from 'app/model/api/billingRuleItem';
 import { ObjectId } from 'app/model/api/objectId';
 import { SimpleBillingRuleItem } from 'app/model/api/simpleBillingRuleItem';
 import { CalculatedBillingRuleItem } from 'app/model/api/calculatedBillingRuleItem';
+import { ServiceCompaniesService } from 'app/service-companies.service';
 
 @Component({
   selector: 'app-add-billing-rule-item',
@@ -20,7 +21,7 @@ export class AddBillingRuleItemComponent implements OnInit {
   private formGroup: FormGroup;
   private opened: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private serviceCompaniesService: ServiceCompaniesService) {
     this.formGroup = this.formBuilder.group({
       description: ['', Validators.required],
       type: [this.itemTypes[0], Validators.required],
@@ -63,25 +64,27 @@ export class AddBillingRuleItemComponent implements OnInit {
     var billingRuleItem;
     if (this.formGroup.get('type').value == this.itemTypes[0]) {
       billingRuleItem = <SimpleBillingRuleItem>{
-        amount: this.formGroup.get('amount').value
+        amount: this.formGroup.get('amount').value,
+        itemType: 'SimpleBillingRuleItem'
       };
     } else {
       billingRuleItem = <CalculatedBillingRuleItem>{
         quantity: this.formGroup.get('quantity').value,
-        rate: this.formGroup.get('rate').value
+        rate: this.formGroup.get('rate').value,
+        itemType: 'CalculatedBillingRuleItem'
       };
     }
     
     billingRuleItem.description = this.formGroup.get('description').value;
-    billingRuleItem.billingRuleId = this.billingRuleItem.id;
+    billingRuleItem.billingRuleId = this.billingRuleItem.billingRuleId;
     console.log(JSON.stringify(billingRuleItem));
 
-    // this.serviceCompaniesService.addBillingRule(this.billingRule).subscribe(
-    //   data => {
-    //     this.serviceCompaniesService.modifyBillingRules(this.billingRule.serviceId);
-    //     this.close();
-    //   }
-    // );
+    this.serviceCompaniesService.addBillingRuleItem(billingRuleItem).subscribe(
+      data => {
+        this.serviceCompaniesService.modifyBillingRules(billingRuleItem.billingRuleId);
+        this.close();
+      }
+    );
   }
 
   private validateInputs() {

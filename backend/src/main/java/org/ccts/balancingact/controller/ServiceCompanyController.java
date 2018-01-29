@@ -75,6 +75,14 @@ public class ServiceCompanyController {
         return new ResponseEntity<>(serviceDao.updateBillingRule(billingRule), HttpStatus.OK);
     }
 
+    @GetMapping(path = {
+        "/{serviceId}/billingRules/{id}/items",
+        "/billingRules/{id}/items"
+    })
+    public ResponseEntity<List<BillingRuleItem>> getBillingRuleItems(@PathVariable(required = false) Optional<UUID> serviceId, @PathVariable UUID id) {
+        return new ResponseEntity<>(serviceDao.getBillingRuleItems(id), HttpStatus.OK);
+    }
+
     @PostMapping(path = {
         "/{serviceId}/billingRules/{id}/items",
         "/billingRules/{id}/items"
