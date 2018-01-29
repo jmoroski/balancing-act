@@ -11,17 +11,17 @@ public class ItemDetails {
     private String description;
 
     @Column
-    private int quantity;
+    private BigDecimal quantity;
 
     @Column
-    private float rate;
+    private BigDecimal rate;
 
     @Column
     private BigDecimal amount;
 
     ItemDetails() {}
 
-    public static ItemDetails create(final String description, final int quantity, final float rate) {
+    public static ItemDetails create(final String description, final BigDecimal quantity, final BigDecimal rate) {
         ItemDetails details = new ItemDetails();
 
         details.description = description;
@@ -41,18 +41,18 @@ public class ItemDetails {
     }
 
     public BigDecimal getAmount() {
-        return amount != null ? amount : BigDecimal.valueOf(rate * (float) quantity) ;
+        return amount != null ? amount : rate.multiply(quantity) ;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public int getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public float getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 

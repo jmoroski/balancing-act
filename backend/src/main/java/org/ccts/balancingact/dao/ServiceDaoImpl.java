@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.UUID;
 
 import org.ccts.balancingact.model.ModelMapperUtils;
-import org.ccts.balancingact.model.api.BankAccountTransaction;
 import org.ccts.balancingact.model.api.BillingRule;
 import org.ccts.balancingact.model.api.BillingRuleItem;
 import org.ccts.balancingact.model.api.Service;
-import org.ccts.balancingact.model.db.BankAccountEntity;
-import org.ccts.balancingact.model.db.BankAccountTransactionEntity;
 import org.ccts.balancingact.model.db.ServiceEntity;
 import org.ccts.balancingact.model.db.ServiceTaskEntity;
 import org.ccts.balancingact.model.db.ServiceTaskItemEntity;
+import org.hibernate.FetchMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -25,12 +23,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class ServiceDaoImpl implements ServiceDao {
     @Autowired
     private SessionFactoryTemplate sessionFactoryTemplate;
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<Service> getServices() {
         DetachedCriteria criteria = DetachedCriteria.forClass(ServiceEntity.class);
         criteria.addOrder(Order.asc("name"));
@@ -41,23 +39,21 @@ public class ServiceDaoImpl implements ServiceDao {
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Service getService(final UUID id) {
         return ModelMapperUtils.getInstance().map(sessionFactoryTemplate.findById(id, ServiceEntity.class), Service.class);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public List<BillingRule> getBillingRules(UUID serviceId) {
         DetachedCriteria criteria = DetachedCriteria.forClass(ServiceTaskEntity.class);
         criteria.add(Restrictions.eq("service.id", serviceId));
+        criteria.setFetchMode("items", FetchMode.SELECT);
         criteria.addOrder(Order.asc("name"));
 
         return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), BillingRule.class);
     }
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public BillingRule getBillingRule(UUID billingRuleId) {
         return ModelMapperUtils.getInstance().map(sessionFactoryTemplate.findById(billingRuleId, ServiceTaskEntity.class), BillingRule.class);
     }
@@ -74,6 +70,15 @@ public class ServiceDaoImpl implements ServiceDao {
     }
 
     @Override
+    public List<BillingRuleItem> getBillingRuleItems(UUID billingRuleId) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(ServiceTaskItemEntity.class);
+        criteria.add(Restrictions.eq("serviceTask.id", billingRuleId));
+
+        return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), BillingRuleItem.class);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public BillingRuleItem addBillingRuleItem(UUID billingRuleId, BillingRuleItem billingRuleItem) {
         ModelMapper mapper = ModelMapperUtils.getInstance();
         ServiceTaskItemEntity entity = mapper.map(billingRuleItem, ServiceTaskItemEntity.class);

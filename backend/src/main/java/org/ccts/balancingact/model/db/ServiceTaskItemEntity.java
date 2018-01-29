@@ -30,11 +30,11 @@ public class ServiceTaskItemEntity extends BaseEntity {
         return item.getDescription();
     }
 
-    public int getQuantity() {
+    public BigDecimal getQuantity() {
         return item.getQuantity();
     }
 
-    public float getRate() {
+    public BigDecimal getRate() {
         return item.getRate();
     }
 

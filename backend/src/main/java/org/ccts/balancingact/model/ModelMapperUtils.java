@@ -1,6 +1,5 @@
 package org.ccts.balancingact.model;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,16 +18,14 @@ public class ModelMapperUtils {
         public BillingRuleItem convert(MappingContext<ServiceTaskItemEntity, BillingRuleItem> context) {
             final ServiceTaskItemEntity entity = context.getSource();
             if (entity.isCalculated()) {
-                System.out.println("creating calculated item");
                 final CalculatedBillingRuleItem item = new CalculatedBillingRuleItem();
                 item.setDescription(entity.getDescription());
                 item.setId(entity.getId().toString());
-                item.setQuantity(BigDecimal.valueOf(entity.getQuantity()));
-                item.setRate(BigDecimal.valueOf(entity.getRate()));
+                item.setQuantity(entity.getQuantity());
+                item.setRate(entity.getRate());
 
                 return item;
             } else {
-                System.out.println("creating simple item");
                 final SimpleBillingRuleItem item = new SimpleBillingRuleItem();
                 item.setDescription(entity.getDescription());
                 item.setId(entity.getId().toString());

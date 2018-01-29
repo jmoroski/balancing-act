@@ -14,6 +14,7 @@ public interface ServiceDao {
     BillingRule getBillingRule(UUID billingRuleId);
     BillingRule addBillingRule(BillingRule billingRule);
     BillingRule updateBillingRule(BillingRule billingRule);
+    List<BillingRuleItem> getBillingRuleItems(UUID billingRuleId);
     BillingRuleItem addBillingRuleItem(UUID billingRuleId, BillingRuleItem billingRuleItem);
     void removeBillingRule(UUID id);
     Service addService(Service service);
