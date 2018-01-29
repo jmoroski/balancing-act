@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "program_groups")
 public class ProgramGroupEntity extends BaseEntity {
@@ -18,6 +21,7 @@ public class ProgramGroupEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "program_id", foreignKey = @ForeignKey(name = "fk_program_groups_programs_id"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ProgramEntity program;
 
     @ManyToOne
