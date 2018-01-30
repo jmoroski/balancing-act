@@ -12,6 +12,7 @@ import { ProgramGroupReportsComponent } from './program-group-reports.component'
 import { ProgramGroupStudentsComponent } from './program-group-students.component';
 import { AddProgramGroupStudentsComponent } from './add-program-group-students.component';
 import { ReportService } from 'app/report.service';
+import { ProgramGroupServicesComponent } from './program-group-services.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ReportService } from 'app/report.service';
     AddEditProgramGroupComponent,
     ProgramGroupReportsComponent,
     ProgramGroupStudentsComponent,
-    AddProgramGroupStudentsComponent
+    AddProgramGroupStudentsComponent,
+    ProgramGroupServicesComponent
   ],
   providers: [
     ProgramService,
