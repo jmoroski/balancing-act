@@ -13,7 +13,7 @@
   <clr-dg-column>Amount</clr-dg-column>
 
   <clr-dg-placeholder>No billing rule items have been created.</clr-dg-placeholder>
-  <clr-dg-row *clrDgItems="let item of billingRuleItems" [clrDgItem]="item">
+  <clr-dg-row *clrDgItems="let item of billingRule?.items" [clrDgItem]="item">
     <clr-dg-action-overflow>
       <button class="action-item" (click)="editBillingRule(billingRule)">Edit Item</button>
       <button class="action-item" (click)="deleteBillingRule(billingRule)">Delete Item</button>
