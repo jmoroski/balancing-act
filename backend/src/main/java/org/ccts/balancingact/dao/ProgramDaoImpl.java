@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.ccts.balancingact.model.ModelMapperUtils;
+import org.ccts.balancingact.model.api.BillingRule;
 import org.ccts.balancingact.model.api.ProgramGroup;
 import org.ccts.balancingact.model.api.Student;
 import org.ccts.balancingact.model.db.AdministratorEntity;
 import org.ccts.balancingact.model.db.ProgramGroupEntity;
+import org.ccts.balancingact.model.db.ProgramGroupServiceEntity;
 import org.ccts.balancingact.model.db.ProgramGroupStudentEntity;
+import org.ccts.balancingact.model.db.ServiceTaskEntity;
 import org.ccts.balancingact.model.db.StudentEntity;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -93,5 +96,47 @@ public class ProgramDaoImpl implements ProgramDao {
         });
 
         return getProgramGroupStudents(programGroupId);
+    }
+
+    @Override
+    public List<BillingRule> getProgramGroupBillingRules(UUID programGroupId) {
+        DetachedCriteria programGroupBillingCriteria = DetachedCriteria.forClass(ProgramGroupServiceEntity.class);
+        programGroupBillingCriteria.add(Restrictions.eq("programGroup.id", programGroupId));
+        programGroupBillingCriteria.setProjection(Projections.property("serviceRule.id"));
+
+        DetachedCriteria criteria = DetachedCriteria.forClass(ServiceTaskEntity.class);
+        criteria.createAlias("service", "service");
+        criteria.add(Subqueries.propertyIn("id", programGroupBillingCriteria));
+        criteria.addOrder(Order.asc("service.name"));
+        criteria.addOrder(Order.asc("name"));
+
+        return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), BillingRule.class);
+    }
+
+    @Override
+    public List<BillingRule> getEligibleProgramGroupBillingRules(UUID programGroupId) {
+        DetachedCriteria programGroupBillingCriteria = DetachedCriteria.forClass(ProgramGroupServiceEntity.class);
+        programGroupBillingCriteria.add(Restrictions.eq("programGroup.id", programGroupId));
+        programGroupBillingCriteria.setProjection(Projections.property("serviceRule.id"));
+
+        DetachedCriteria criteria = DetachedCriteria.forClass(ServiceTaskEntity.class);
+        criteria.createAlias("service", "service");
+        criteria.add(Subqueries.propertyNotIn("id", programGroupBillingCriteria));
+        criteria.addOrder(Order.asc("service.name"));
+        criteria.addOrder(Order.asc("name"));
+
+        return ModelMapperUtils.mapList(sessionFactoryTemplate.findByCriteria(criteria), BillingRule.class);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public List<BillingRule> setProgramGroupBillingRules(UUID programGroupId, List<BillingRule> billingRules) {
+        final ProgramGroupEntity group = sessionFactoryTemplate.load(programGroupId, ProgramGroupEntity.class);
+        billingRules.stream().forEach(billingRule -> {
+            ServiceTaskEntity entity = sessionFactoryTemplate.load(UUID.fromString(billingRule.getId()), ServiceTaskEntity.class);
+            sessionFactoryTemplate.save(new ProgramGroupServiceEntity(group, entity));
+        });
+
+        return getProgramGroupBillingRules(programGroupId);
     }
 }
