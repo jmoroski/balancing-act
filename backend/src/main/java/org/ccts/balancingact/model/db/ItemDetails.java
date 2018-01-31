@@ -13,7 +13,7 @@ public class ItemDetails {
     @Column
     private BigDecimal quantity;
 
-    @Column
+    @Column(precision = 19, scale = 6)
     private BigDecimal rate;
 
     @Column
