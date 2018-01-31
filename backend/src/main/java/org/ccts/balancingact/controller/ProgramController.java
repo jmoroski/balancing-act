@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.ccts.balancingact.dao.ProgramDao;
+import org.ccts.balancingact.model.api.BillingRule;
 import org.ccts.balancingact.model.api.ProgramGroup;
 import org.ccts.balancingact.model.api.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,21 @@ public class ProgramController {
     @PutMapping(path = "{id}/students")
     public ResponseEntity<List<Student>> setProgramGroupStudents(@PathVariable UUID id, @RequestBody List<Student> students) {
         return new ResponseEntity<>(programDao.setProgramGroupStudents(id, students), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{id}/billingRules")
+    public ResponseEntity<List<BillingRule>> getProgramGroupBillingRules(@PathVariable UUID id) {
+        return new ResponseEntity<>(programDao.getProgramGroupBillingRules(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{id}/eligibleBillingRules")
+    public ResponseEntity<List<BillingRule>> getEligibleProgramGroupBillingRules(@PathVariable UUID id) {
+        return new ResponseEntity<>(programDao.getEligibleProgramGroupBillingRules(id), HttpStatus.OK);
+    }
+
+    @PutMapping(path = "{id}/billingRules")
+    public ResponseEntity<List<BillingRule>> setProgramGroupBillingRules(@PathVariable UUID id, @RequestBody List<BillingRule> billingRules) {
+        return new ResponseEntity<>(programDao.setProgramGroupBillingRules(id, billingRules), HttpStatus.OK);
     }
 
 
