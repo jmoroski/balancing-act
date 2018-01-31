@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { ProgramGroup } from 'app/model/api/programGroup';
 import { ObjectId } from 'app/model/api/objectId';
 import { Student } from 'app/model/api/student';
+import { BillingRule } from 'app/model/api/billingRule';
 
 @Injectable()
 export class ProgramService extends BaseService {
@@ -50,6 +51,18 @@ export class ProgramService extends BaseService {
 
   getEligibleProgramGroupStudents(programGroup: ProgramGroup): Observable<Student[]> {
     return this.http.get<Student[]>(`${this.basePath}/programGroups/${programGroup.id}/eligibleStudents`);
+  }
+
+  getProgramGroupBillingRules(programGroup: ProgramGroup): Observable<BillingRule[]> {
+    return this.http.get<BillingRule[]>(`${this.basePath}/programGroups/${programGroup.id}/billingRules`);
+  }
+
+  setProgramGroupBillingRules(programGroup: ProgramGroup, billingRules: BillingRule[]): Observable<BillingRule[]> {
+    return this.http.put<BillingRule[]>(`${this.basePath}/programGroups/${programGroup.id}/billingRules`, billingRules);
+  }
+
+  getEligibleProgramGroupBillingRules(programGroup: ProgramGroup): Observable<BillingRule[]> {
+    return this.http.get<BillingRule[]>(`${this.basePath}/programGroups/${programGroup.id}/eligibleBillingRules`);
   }
   
   onModifyProgramGroups() {
