@@ -19,6 +19,6 @@
 1. Run the application by navigating to the backend directory and running tomcat via Maven.
    ```bash
    cd backend
-   mvn tomcat7:run
+   mvn tomcat7:run-war
    ```
 2. From a browser, navigate to http://localhost:8080/
