@@ -1,12 +1,12 @@
 package org.ccts.balancingact.model.api;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class InvoiceReport {
-    private Date invoiceDate;
-    private Date dueDate;
+    private LocalDate invoiceDate;
+    private LocalDate dueDate;
     private String invoiceNumber;
 
     private String companyName;
@@ -21,19 +21,19 @@ public class InvoiceReport {
     private List<InvoiceReportItem> items;
     private BigDecimal total;
 
-    public Date getInvoiceDate() {
+    public LocalDate getInvoiceDate() {
         return invoiceDate;
     }
 
-    public void setInvoiceDate(Date invoiceDate) {
+    public void setInvoiceDate(LocalDate invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 

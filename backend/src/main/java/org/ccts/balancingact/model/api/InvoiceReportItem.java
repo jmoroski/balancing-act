@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 public class InvoiceReportItem {
     private String description;
-    private int quantity;
-    private float rate;
+    private BigDecimal quantity;
+    private BigDecimal rate;
     private BigDecimal amount;
 
-    public InvoiceReportItem(String description, int quantity, float rate, BigDecimal amount) {
+    public InvoiceReportItem(String description, BigDecimal quantity, BigDecimal rate, BigDecimal amount) {
         this.description = description;
         this.quantity = quantity;
         this.rate = rate;
@@ -23,19 +23,19 @@ public class InvoiceReportItem {
         this.description = description;
     }
 
-    public int getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
-    public float getRate() {
+    public BigDecimal getRate() {
         return rate;
     }
 
-    public void setRate(float rate) {
+    public void setRate(BigDecimal rate) {
         this.rate = rate;
     }
 
