@@ -46,10 +46,10 @@ ${ captured?replace("^\\s+|\\s+$|\\n|\\r", "", "rm") }
                             "margin":[0, 10, 0, 0],
                             "table":{
                                 "headerRows":1,
-                                "widths":["*", "*", "*"],
+                                "widths": ["auto", "auto", "*"],
                                 "body":[
                                     ["Date", "Due Date", "Invoice #" ],
-                                    ["${report.invoiceDate?date}", "${report.dueDate?date}", "${report.invoiceNumber}"]
+                                    ["${report.invoiceDate?string}", "${report.dueDate?string}", "${report.invoiceNumber}"]
                                 ]
                             }
                         }
@@ -62,9 +62,14 @@ ${ captured?replace("^\\s+|\\s+$|\\n|\\r", "", "rm") }
                             "layout":"headerLineOnly",
                             "table":{
                                 "headerRows":1,
-                                "widths":["*", "*"],
+                                "widths":["50%", "50%"],
                                 "body":[
-                                    ["Balance Due>>", "${report.total?string.currency}"]
+                                    ["Balance Due>>",
+                                        {
+                                            "text":"${report.total?string.currency}",
+                                            "alignment":"right"
+                                        }
+                                    ]
                                 ]
                             }
                         }
@@ -93,9 +98,22 @@ ${ captured?replace("^\\s+|\\s+$|\\n|\\r", "", "rm") }
                 "headerRows":1,
                 "widths":["*", "15%", "15%", "15%"],
                 "body":[
-                    ["Description", "Quantity", "Rate", "Amount"],
+                    ["Description", {"text":"Quantity","alignment":"right"}, {"text":"Rate","alignment":"right"}, {"text":"Amount","alignment":"right"}],
                     <#list report.items as item>
-                    ["${item.description}", "<#if item.quantity gt 0>${item.quantity}</#if>", "<#if item.rate gt 0>${item.rate}</#if>", "${item.amount?string.currency}"]<#if item?has_next>,</#if>
+                    ["${item.description}",
+                        {
+                            "text": "<#if item.quantity??>${item.quantity}</#if>",
+                            "alignment":"right"
+                        },
+                        {
+                            "text":"<#if item.rate??>${item.rate?string['0.######']}</#if>",
+                            "alignment":"right"
+                        },
+                        {
+                            "text":"${item.amount?string.currency}",
+                            "alignment":"right"
+                        }
+                    ]<#if item?has_next>,</#if>
                     </#list>
                 ]
             }
@@ -115,7 +133,8 @@ ${ captured?replace("^\\s+|\\s+$|\\n|\\r", "", "rm") }
                         },
                         {
                             "border":[false, true, false, false],
-                            "text":"${report.total?string.currency}"
+                            "text":"${report.total?string.currency}",
+                            "alignment":"right"
                         }
                     ]
                 ]
