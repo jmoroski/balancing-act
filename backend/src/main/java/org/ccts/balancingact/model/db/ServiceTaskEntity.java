@@ -1,6 +1,7 @@
 package org.ccts.balancingact.model.db;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -43,6 +44,26 @@ public class ServiceTaskEntity extends BaseEntity {
 
     public String getName() {
         return name;
+    }
+
+    public TaskFrequency getFrequency() {
+        return frequency;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public ServiceEntity getService() {
+        return service;
+    }
+
+    public List<ServiceTaskItemEntity> getItems() {
+        return Collections.unmodifiableList(items);
     }
 
     public void setService(ServiceEntity service) {

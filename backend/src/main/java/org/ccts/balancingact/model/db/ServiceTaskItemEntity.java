@@ -21,7 +21,6 @@ public class ServiceTaskItemEntity extends BaseEntity {
 
     ServiceTaskItemEntity() {}
 
-
     public BigDecimal getAmount() {
         return item.getAmount();
     }
@@ -48,5 +47,9 @@ public class ServiceTaskItemEntity extends BaseEntity {
 
     public void setServiceTask(ServiceTaskEntity serviceTask) {
         this.serviceTask = serviceTask;
+    }
+
+    public ItemDetails getItem() {
+        return item;
     }
 }

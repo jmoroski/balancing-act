@@ -1,6 +1,7 @@
 package org.ccts.balancingact.model.db;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,11 +10,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.ccts.balancingact.model.common.TaskFrequency;
+import org.ccts.balancingact.model.api.RuleFrequency;
 
 @Entity
 @Table(name = "payroll_tasks")
@@ -26,13 +26,18 @@ public class PayrollTaskEntity extends BaseEntity {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private TaskFrequency frequency;
+    private RuleFrequency frequency;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
+
+    @OneToMany(mappedBy = "payrollTask")
+    private List<PayrollTaskItemEntity> items;
+
+    public void setPayroll(PayrollEntity payroll) {
+        this.payroll = payroll;
+    }
 }
