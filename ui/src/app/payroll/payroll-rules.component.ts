@@ -7,6 +7,9 @@ import { AddEditPayrollRuleComponent } from 'app/payroll/add-edit-payroll-rule.c
 import { ActivatedRoute } from '@angular/router';
 
 import 'rxjs/add/operator/mergeMap';
+import { CalculatedPayrollRuleItem } from 'app/model/api/calculatedPayrollRuleItem';
+import { SimplePayrollRuleItem } from 'app/model/api/simplePayrollRuleItem';
+import { PayrollRuleItem } from 'app/model/api/payrollRuleItem';
 
 @Component({
   selector: 'app-payroll-rules',
@@ -46,14 +49,35 @@ export class PayrollRulesComponent implements OnInit, OnDestroy {
   }
 
   private addPayrollRule(): void {
-
+    this.addEditComponent.open(this.payrollCompany.id);
   }
 
   private editPayrollRule(payrollRule: PayrollRule): void {
-
+    this.addEditComponent.open(this.payrollCompany.id, payrollRule);
   }
 
   private deletePayrollRule(payrollRule: PayrollRule): void {
 
+  }
+
+  totalAmount(payrollRule: PayrollRule): number {
+    var amount: number = 0.0;
+    if (!payrollRule.items) {
+      return amount;
+    }
+    
+    payrollRule.items.forEach(item => {
+      if (item['quantity']) {
+        amount += ((<CalculatedPayrollRuleItem>item).quantity * (<CalculatedPayrollRuleItem>item).rate);
+      } else {
+        amount += (<SimplePayrollRuleItem>item).amount;
+      }
+    });
+
+    return amount;
+  }
+
+  amount(item: PayrollRuleItem): number {
+    return item['amount'] ? (<SimplePayrollRuleItem>item).amount : ((<CalculatedPayrollRuleItem>item).quantity * (<CalculatedPayrollRuleItem>item).rate);
   }
 }

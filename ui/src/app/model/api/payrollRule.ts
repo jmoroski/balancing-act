@@ -20,7 +20,7 @@ export interface PayrollRule {
     name: string;
     payrollId: ObjectId;
     frequency: RuleFrequency;
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
     items?: Array<PayrollRuleItem>;
 }

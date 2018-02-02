@@ -23,6 +23,6 @@
     <clr-dg-cell style="text-align:right">{{item.rate}}</clr-dg-cell>
     <clr-dg-cell style="text-align:right">{{amount(item) | baCurrency}}</clr-dg-cell>
   </clr-dg-row>
-  <clr-dg-footer>{{billingRuleItems?.length || 0}} rules</clr-dg-footer>
+  <clr-dg-footer>{{billingRule?.items.length || 0}} rules</clr-dg-footer>
 </clr-datagrid>
 <app-add-billing-rule-item #addBillingRuleItemComponent (submitted)="loadData()"></app-add-billing-rule-item>

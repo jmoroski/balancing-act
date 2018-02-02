@@ -9,6 +9,7 @@ import { AddEditPayrollCompanyComponent } from './add-edit-payroll-company.compo
 import { AddEditPayrollRuleComponent } from './add-edit-payroll-rule.component';
 import { AddPayrollRuleItemComponent } from './add-payroll-rule-item.component';
 import { BaseModule } from 'app/base.module';
+import { PayrollService } from 'app/payroll.service';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { BaseModule } from 'app/base.module';
     CommonModule,
     PayrollRoutingModule
   ],
-  declarations: [PayrollCompaniesComponent, PayrollRulesComponent, PayrollRuleItemsComponent, AddEditPayrollCompanyComponent, AddEditPayrollRuleComponent, AddPayrollRuleItemComponent]
+  declarations: [PayrollCompaniesComponent, PayrollRulesComponent, PayrollRuleItemsComponent, AddEditPayrollCompanyComponent, AddEditPayrollRuleComponent, AddPayrollRuleItemComponent],
+  providers: [PayrollService]
 })
 export class PayrollModule { }

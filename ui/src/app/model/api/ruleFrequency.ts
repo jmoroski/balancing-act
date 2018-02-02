@@ -17,5 +17,9 @@ export type RuleFrequency = 'Bimonthly' | 'Monthly' | 'None';
 export const RuleFrequency = {
     Bimonthly: 'Bimonthly' as RuleFrequency,
     Monthly: 'Monthly' as RuleFrequency,
-    None: 'None' as RuleFrequency
+    None: 'None' as RuleFrequency,
+
+    values(): RuleFrequency[] {
+        return [RuleFrequency.Bimonthly, RuleFrequency.Monthly, RuleFrequency.None];
+    }
 }

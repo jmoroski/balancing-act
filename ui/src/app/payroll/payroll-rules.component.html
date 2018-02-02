@@ -26,7 +26,7 @@
     <clr-dg-cell>{{payrollRule.startDate | date:'MM/dd/yyyy'}}</clr-dg-cell>
     <clr-dg-cell>{{payrollRule.endDate | date:'MM/dd/yyyy'}}</clr-dg-cell>
     <clr-dg-row-detail *clrIfExpanded>
-      <table class="table table-compact" style="width:90%" *ngIf="billingRule.items else empty">
+      <table class="table table-compact" style="width:90%" *ngIf="payrollRule.items.length > 0 else empty">
         <thead>
           <tr>
             <th>Description</th>

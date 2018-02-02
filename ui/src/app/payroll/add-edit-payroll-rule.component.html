@@ -1,3 +1,42 @@
-<p>
-  add-edit-payroll-rule works!
-</p>
+<clr-modal #modal [clrModalClosable]="false" [(clrModalOpen)]="opened">
+  <h3 class="modal-title">{{isEdit ? 'Edit Payroll Rule' : 'Add Payroll Rule'}}</h3>
+  <div class="modal-body" *ngIf="opened">
+    <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+      <section class="form-block">
+        <div class="form-group">
+          <label>Name</label>
+          <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('name')">
+            <input type="text" formControlName="name">
+            <span class="tooltip-content">Description is required.</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Frequency</label>
+          <div class="select">
+            <select formControlName="frequency">
+              <option *ngFor="let frequency of frequencies" [value]="frequency">{{frequency}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Start Date</label>
+          <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('startDate')">
+            <input type="date" formControlName="startDate" [ngModel]="payrollRule.startDate | date:'yyyy-MM-dd'">
+            <span class="tooltip-content">Start date is required.</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label>End Date</label>
+          <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('endDate')">
+            <input type="date" formControlName="endDate" [ngModel]="payrollRule.endDate | date:'yyyy-MM-dd'">
+            <span class="tooltip-content">End date is required.</span>
+          </label>
+        </div>
+      </section>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline cancel-btn" (click)="close()">Cancel</button>
+    <button type="button" class="btn btn-primary ok-btn" (click)="submit()" [disabled]="!formGroup.valid">Ok</button>
+  </div>
+</clr-modal>

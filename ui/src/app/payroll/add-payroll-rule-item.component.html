@@ -1,3 +1,51 @@
-<p>
-  add-payroll-rule-item works!
-</p>
+<clr-modal #modal [clrModalClosable]="false" [(clrModalOpen)]="opened">
+    <h3 class="modal-title">Add Payroll Rule Item</h3>
+    <div class="modal-body" *ngIf="opened">
+      <form class="form" [formGroup]="formGroup" (ngSubmit)="submit()">
+        <section class="form-block">
+          <div class="form-group">
+            <label>Description</label>
+            <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('description')">
+              <input type="text" formControlName="description">
+              <span class="tooltip-content">Description is required.</span>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>Type</label>
+            <div class="select">
+              <select formControlName="type">
+                <option *ngFor="let type of itemTypes" [value]="type">{{type}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="formGroup.get('type').value == itemTypes[0]; else complex">
+            <label>Amount</label>
+            <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('amount', 'missingAmount')">
+              <input type="number" formControlName="amount">
+              <span class="tooltip-content">Amount is required.</span>
+            </label>
+          </div>
+          <ng-template #complex>
+            <div class="form-group">
+              <label>Quantity</label>
+              <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('quantity', 'missingQuantity')">
+                <input type="number" formControlName="quantity">
+                <span class="tooltip-content">Quantity is required.</span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label>Rate</label>
+              <label aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-md" [class.invalid]="invalid('rate', 'missingRate')">
+                <input type="number" formControlName="rate">
+                <span class="tooltip-content">Rate is required.</span>
+              </label>
+            </div>
+          </ng-template>
+        </section>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline cancel-btn" (click)="close()">Cancel</button>
+      <button type="button" class="btn btn-primary ok-btn" (click)="submit()" [disabled]="!formGroup.valid">Ok</button>
+    </div>
+  </clr-modal>

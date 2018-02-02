@@ -1,3 +1,28 @@
-<p>
-  payroll-rule-items works!
-</p>
+<button class="btn btn-sm btn-link" routerLink="/payroll/employers">Payroll</button>&gt;<button class="btn btn-sm btn-link" routerLink="../">Payroll Rules</button>
+<h5>Payroll Rules Items<span *ngIf="payroll"> for {{payroll.name}}</span></h5>
+<clr-datagrid [clrDgLoading]="loading">
+  <clr-dg-action-bar>
+    <div class="btn-group">
+      <button type="button" class="btn btn-sm btn-primary" (click)="addPayrollRuleItem()">
+        <clr-icon shape="plus"></clr-icon> Add Item</button>
+    </div>
+  </clr-dg-action-bar>
+  <clr-dg-column>Description</clr-dg-column>
+  <clr-dg-column>Quantity</clr-dg-column>
+  <clr-dg-column>Rate</clr-dg-column>
+  <clr-dg-column>Amount</clr-dg-column>
+
+  <clr-dg-placeholder>No payroll rule items have been created.</clr-dg-placeholder>
+  <clr-dg-row *clrDgItems="let item of payrollRule?.items" [clrDgItem]="item">
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="editPayrollRule(payrollRule)">Edit Item</button>
+      <button class="action-item" (click)="deletePayrollRule(payrollRule)">Delete Item</button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{item.description}}</clr-dg-cell>
+    <clr-dg-cell style="text-align:right">{{item.quantity}}</clr-dg-cell>
+    <clr-dg-cell style="text-align:right">{{item.rate}}</clr-dg-cell>
+    <clr-dg-cell style="text-align:right">{{amount(item) | baCurrency}}</clr-dg-cell>
+  </clr-dg-row>
+  <clr-dg-footer>{{payrollRule?.items.length || 0}} rules</clr-dg-footer>
+</clr-datagrid>
+<app-add-payroll-rule-item #addComponent (submitted)="loadData()"></app-add-payroll-rule-item>
