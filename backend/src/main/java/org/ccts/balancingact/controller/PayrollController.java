@@ -61,7 +61,7 @@ public class PayrollController {
 
     @PostMapping(path = "/{id}/payrollRules")
     public ResponseEntity<PayrollRule> addPayrollRule(@PathVariable UUID id, @RequestBody PayrollRule payrollRule) {
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(this.payrollDao.addPayrollRule(payrollRule), HttpStatus.CREATED);
     }
 
     @GetMapping(path = {
@@ -69,7 +69,7 @@ public class PayrollController {
         "/payrollRules/{id}"
     })
     public ResponseEntity<PayrollRule> getPayrollRule(@PathVariable(required = false) Optional<UUID> payrollCompanyId, @PathVariable UUID id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(this.payrollDao.getPayrollRule(id), HttpStatus.OK);
     }
 
     @PutMapping(path = "/{payrollCompanyId}/payrollRules/{id}")
@@ -81,8 +81,8 @@ public class PayrollController {
         "/{payrollCompanyId}/payrollRules/{id}/items",
         "/payrollRules/{id}/items"
     })
-    public ResponseEntity<BillingRuleItem> addPayrollRuleItem(@PathVariable(required = false) Optional<UUID> payrollCompanyId, @PathVariable UUID id, @RequestBody PayrollRuleItem payrollRuleItem) {
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<PayrollRuleItem> addPayrollRuleItem(@PathVariable(required = false) Optional<UUID> payrollCompanyId, @PathVariable UUID id, @RequestBody PayrollRuleItem payrollRuleItem) {
+        return new ResponseEntity<>(this.payrollDao.addPayrollRuleItem(id, payrollRuleItem), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{payrollCompanyId}/payrollRules/{id}")
