@@ -1,7 +1,5 @@
 package org.ccts.balancingact.dao;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +9,7 @@ import org.ccts.balancingact.model.api.PayrollRule;
 import org.ccts.balancingact.model.api.PayrollRuleItem;
 import org.ccts.balancingact.model.db.PayrollEntity;
 import org.ccts.balancingact.model.db.PayrollTaskEntity;
+import org.ccts.balancingact.model.db.PayrollTaskItemEntity;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.modelmapper.ModelMapper;
@@ -76,14 +75,18 @@ public class PayrollDaoImpl implements PayrollDao {
 
     @Override
     public PayrollRule getPayrollRule(UUID payrollRuleId) {
-        // TODO Auto-generated method stub
-        return null;
+        return ModelMapperUtils.getInstance().map(sessionFactoryTemplate.findById(payrollRuleId, PayrollTaskEntity.class), PayrollRule.class);
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public PayrollRule addPayrollRule(PayrollRule payrollRule) {
-        // TODO Auto-generated method stub
-        return null;
+        ModelMapper mapper = ModelMapperUtils.getInstance();
+        PayrollTaskEntity entity = mapper.map(payrollRule, PayrollTaskEntity.class);
+        entity.setPayroll(sessionFactoryTemplate.findById(UUID.fromString(payrollRule.getPayrollId()), PayrollEntity.class));
+        sessionFactoryTemplate.save(entity);
+
+        return mapper.map(entity, PayrollRule.class);
     }
 
     @Override
@@ -93,10 +96,14 @@ public class PayrollDaoImpl implements PayrollDao {
     }
 
     @Override
-    public PayrollRuleItem addPayrollRuleItem(UUID payrollRuleId,
-            PayrollRuleItem payrollRuleItem) {
-        // TODO Auto-generated method stub
-        return null;
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public PayrollRuleItem addPayrollRuleItem(UUID payrollRuleId, PayrollRuleItem payrollRuleItem) {
+        ModelMapper mapper = ModelMapperUtils.getInstance();
+        PayrollTaskItemEntity entity = mapper.map(payrollRuleItem, PayrollTaskItemEntity.class);
+        entity.setPayrollTask(sessionFactoryTemplate.load(payrollRuleId, PayrollTaskEntity.class));
+        sessionFactoryTemplate.save(entity);
+
+        return mapper.map(entity, PayrollRuleItem.class);
     }
 
     @Override
